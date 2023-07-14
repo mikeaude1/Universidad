@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Registro Aspirantes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="/public/javascripts/jquery.min.js"></script>
+        <script src="/public/javascripts/jquery.widget.min.js"></script>
+        <script src="/public/javascripts/metro.min.js"></script>
+        <link href="/public/images/iconFont.css" rel="stylesheet">
+        <link href="/public/images/metro-bootstrap-responsive.css" rel="stylesheet">
+        <link  href="/public/images/metro-bootstrap.css" rel="stylesheet">
+        <link href="@{'/public/images/fonts/iconFont.woff'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.woff'}">
+        <link href="@{'/public/images/fonts/iconFont.ttf'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.ttf'}">
+    <body metro>
+        <div class="span6 input-control select">
+
+            <label>Grupo</label>
+
+            <select id="grupo">
+
+                <option>Seleccionar</option>
+                #{list grupo, as: 'gp'}
+                <option value="${gp.id}">${gp.Nombre}</option>
+                #{/list}
+            </select>
+
+            <button id="inscribir" onclick="inscribir()" class="button fg-white bg-darkBlue place-right" type="button" >Inscribir</button>
+        </div>
+        <div id="resul">  </div>
+        <script>
+            function inscribir() {
+                var grupo = $("#grupo").val();
+                $.get("/Application/Generarinscripcion", {
+                    "grupo": grupo,
+                    "aspirante": "${aspirante}"
+                }, function (respuesta) {
+                    $("#resul").html(respuesta);
+                });
+            }
+        </script>
+    </body>
+</html>

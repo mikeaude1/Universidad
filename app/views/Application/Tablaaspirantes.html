@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="${_response_encoding}">
+        <style>div.container {
+                width: 80%;
+            }</style>
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="/public/javascripts/jquery.min.js"></script>
+        <script src="/public/javascripts/jquery.widget.min.js"></script>
+        <script src="/public/javascripts/metro.min.js"></script>
+        <link href="/public/images/iconFont.css" rel="stylesheet">
+        <link href="/public/images/metro-bootstrap-responsive.css" rel="stylesheet">
+        <link  href="/public/images/metro-bootstrap.css" rel="stylesheet">
+        <link href="@{'/public/images/fonts/iconFont.woff'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.woff'}">
+        <link href="@{'/public/images/fonts/iconFont.ttf'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.ttf'}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    <body class="metro">
+        <div class="grid">
+
+            <div id="dataTables_wrapper">
+                <table is="table1" id='myTable' class="table display dataTable hover stripe order-column" style="border-collapse: collapse; border:1px solid black; width:100%;">
+                    <thead>
+                        <tr>
+                            <th  class="text-left sorting sorting_desc" tabindex="0" rowspan='1' colspan="1" arial-label='Name: activate to sort column escending' arial-sort='descending' " >
+                                Nombre
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                Apellido Paterno
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                Apellido Materno
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                Inscribir
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="striped">
+
+                        #{list tablaaspirante,as: 't'}
+                        <tr class="odd">
+                            <td id="Nombre" class="right sorting_1 " style="border:1px solid black;" >
+                                ${t.persona.Nombre}
+                                </font>
+                            </td>
+                            <td id="apaterno"  class="right sorting_1" style="border:1px solid black;">
+                                ${t.persona.ApellidoPaterno}
+
+                            </td>
+                            <td id="amaterno"  class="right sorting_1" style="border:1px solid black;">
+                                ${t.persona.ApellidoMaterno}</font>
+
+                            </td>
+                            <td class="right sorting_1" style="border:1px solid black;">
+                                <button class="button fg-white bg-darkBlue place-right" onclick="mandar(${t.id})" name="alumno">Inscribir</button>
+                                </font>
+                        <tr>
+                            #{/list}
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+                <div id="resul"></div>
+                <script>
+
+                    function mandar(aspirante) {
+
+                    console.log("${idcarrera}");
+                    $.post("/Application/Mandarinscripcion", {
+                    "idcarrera": "${idcarrera}",
+                            "aspirante": aspirante
+                    }, function (respuesta) {
+                    $("#resul").html(respuesta);
+                    });
+                    }
+                </script>
+            </div>
+    </body>
+</html>
