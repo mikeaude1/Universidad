@@ -41,7 +41,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script>
             function inscribir() {
                 var grupo = $("#grupo").val();
-                $.get("/Application/Generarinscripcion", {
+                $.get("/Escolares/Generarinscripcion", {
                     "grupo": grupo,
                     "aspirante": "${aspirante}"
                 }, function (respuesta) {

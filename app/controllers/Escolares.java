@@ -7,7 +7,7 @@ import java.util.*;
 
 import models.*;
 
-public class Application extends Controller {
+public class Escolares extends Controller {
 
     public static void index() {
         render();
@@ -51,7 +51,7 @@ public class Application extends Controller {
     }
 
     public static void Mandarinscripcion(Long aspirante, Long idcarrera) {
-
+        //Registroaspirates aspirante = Registroaspirante.find("aspirante.id=?", aspirantes
         List<Periodo> gperiodo = Periodo.findAll();
 
         render(aspirante, gperiodo, idcarrera);
@@ -93,5 +93,9 @@ public class Application extends Controller {
             historialm.save();
         }
         render(historiala);
+    }
+
+    public static void Buscaralumno() {
+        render();
     }
 }
