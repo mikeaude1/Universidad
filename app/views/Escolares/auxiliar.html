@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class='row'>
+            <div class="span12 panel" >
+                <div class="panel-header fg-white fn-bolder" style="background-color: #1D428A;">
+                    Reinscribir
+                </div>
+                <div class="panel-content bg-steel fg-white fn-bolder">
+                    <div class="span6">
+                        <select  id="idcarrera"   name='carrera' onchange="tabla()">
+                            <label>Carrera</label>
+                            <option value="0">Selecciona la Carrera</option>
+                            #{list carrera,as: 'C'}
+                            <option value="${C.id}">${C.Nombre}</option>
+                            #{/list}
+
+                        </select>
+                    </div>
+                    <div class="span6">
+                        <select  id="periodo"   name='periodo' onchange='grupoperiodo()'>
+                            <option value="0">Selecciona el periodo</option>
+                            #{list gperiodo, as: 'p'}
+                            <option value="${p.id}">${p.Nombre}</option>
+                            #{/list}
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="span6">
+                            <label>grupo</label>
+                            <input type="select"></input>
+                        </div>
+                        <div class="span6">
+                            <button>Inscribir
+                            </button>
+                        </div>
+                        <div class='row'>
+                            <div class="span12 panel" >
+                                <div class="panel-header fg-white fn-bolder" style="background-color: #1D428A;">
+                                    Reinscribir
+                                </div>
+                                <div class="panel-content bg-steel fg-white fn-bolder">
+                                    <div class="span6">
+                                        <select  id="idcarrera"   name='carrera' onchange="tabla()">
+                                            <label>Carrera</label>
+                                            <option value="0">Selecciona la Carrera</option>
+                                            #{list carrera,as: 'C'}
+                                            <option value="${C.id}">${C.Nombre}</option>
+                                            #{/list}
+
+                                        </select>
+                                    </div>
+                                    <div class="span6">
+                                        <select  id="periodo"   name='periodo' onchange='grupoperiodo()'>
+                                            <option value="0">Selecciona el periodo</option>
+                                            #{list gperiodo, as: 'p'}
+                                            <option value="${p.id}">${p.Nombre}</option>
+                                            #{/list}
+                                        </select>
+                                    </div>
+                                    <div class="row">
+                                        <div class="span6">
+                                            <label>grupo</label>
+                                            <input type="select"></input>
+                                        </div>
+                                        <div class="span6">
+                                            <button>Inscribir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

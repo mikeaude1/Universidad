@@ -47,7 +47,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <script>
                     function grupoperiodo() {
                         var grupoperiodo = $("#periodo").val();
-                        $.get("/Escolares/grupoperiodo", {"periodo": grupoperiodo,
+                        $.get("/Escolares/grupoperiodo", {
+                            "periodo": grupoperiodo,
                             "aspirante": "${aspirante}",
                             "idcarrera": "${idcarrera}"
                         }, function (respuesta) {

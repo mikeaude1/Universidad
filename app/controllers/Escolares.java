@@ -98,4 +98,45 @@ public class Escolares extends Controller {
     public static void Buscaralumno() {
         render();
     }
+
+    public static void Expediente(Long p) {
+        Alumnos persona = Alumnos.findById(p);
+        System.out.println(p);
+        Historialalumnos alumnos = Historialalumnos.find("alumno.id=? order By id Desc", p).first();
+        System.out.println(alumnos + "sisoyama");
+        Historialalumnos Materia = Historialalumnos.find("alumno.id=? ", p).first();
+        System.out.println(Materia);
+        List<Carreras> carrera = Carreras.findAll();
+        List<Historialalumnos> halumnos = Historialalumnos.find("alumno.id=? AND activo = true", p).fetch();
+        //List<Calificaciones> calificacion = Calificaciones.find("Historialmateria.Historialalumno.id=?", alumnos.id).fetch();
+        // System.out.println(calificacion + "sisoy");
+        render(persona, alumnos, Materia, carrera, halumnos);
+    }
+
+    public static void borrarhalumno(long halum) {
+        Historialalumnos inscripcion = Historialalumnos.find("id=? ", halum).first();
+        inscripcion.activo = false;
+        render();
+    }
+
+    public static void Periodo(long idcarrera) {
+        List<Periodo> gperiodo = Periodo.findAll();
+        render(idcarrera, gperiodo);
+    }
+
+    public static void Tablabusqueda(String matricula, String nombre, String apaterno, String amaterno) {
+        List< Alumnos> persona;
+
+        if (matricula.equals("")) {
+
+            persona = Alumnos.find("Persona.Nombre like ? AND Persona.ApellidoPaterno like ? AND Persona.ApellidoMaterno like ?", String.format("%%%s%%", nombre), String.format("%%%s%%", apaterno), String.format("%%%s%%", amaterno)).fetch();
+
+        } else {
+            persona = Alumnos.find("matricula= ?", matricula).fetch();
+
+        }
+
+        render(persona);
+
+    }
 }

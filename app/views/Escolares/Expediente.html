@@ -1,0 +1,243 @@
+#{extends 'main.html' /}
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <link href="/public/images/iconFont.css" rel="stylesheet">
+        <link href="/public/images/metro-bootstrap-responsive.css" rel="stylesheet">
+        <link  href="/public/images/metro-bootstrap.css" rel="stylesheet">
+        <link href="@{'/public/images/fonts/iconFont.woff'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.woff'}">
+        <link href="@{'/public/images/fonts/iconFont.ttf'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.ttf'}">
+        <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="/public/javascripts/jquery.min.js"></script>
+        <script src="/public/javascripts/jquery.widget.min.js"></script>
+        <script src="/public/javascripts/metro.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <style>.masked {
+                -webkit-mask-box-image: url("mask-border-diamonds.png")
+                    30 fill /          /* slice */
+                    20px /             /* width */
+                    1px                /* outset */
+                    round;             /* repeat */
+
+                mask-border:
+                    url("mask-border-diamonds.png")
+                    30 fill /        /* slice */
+                    20px /           /* width */
+                    1px              /* outset */
+                    round;           /* repeat */
+            }
+        </style>
+    </head>
+    <body metro>
+        <div class="grid fluid">
+            <div class="row">
+                <div class="panel">
+
+                    <div class="span12 panel"  data-role="panel" >
+                        <div class="panel-header  fg-white fn-bolder" style="background: linear-gradient(to right, rgb(0, 92, 151), rgb(54, 55, 149)); font-weight: bolder !important;">
+                            Informacion Personal
+                        </div>
+                        <div class="panel-content  fg-white fn-bolder" style="background: linear-gradient(to right, rgb(44, 62, 80), rgb(52, 152, 219));">
+                            <div class="span3">Matricula</div>
+                            <div class="span3">Nombre</div>
+                            <div class="span3">Apellido Paterno</div>
+                            <div class="span3">Apellido Materno</div>
+                            <div class="row">
+                                <div class="span3">${persona.matricula}</div>
+                                <div class="span3">${persona.Persona.Nombre}</div>
+                                <div class="span3">${persona.Persona.ApellidoPaterno}</div>
+                                <div class="span3">${persona.Persona.ApellidoMaterno}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="span12 panel"data-role="panel">
+                            <div class="panel-header fg-white fn-bolder" style="font-weight: bolder !important; background: linear-gradient(to right, rgb(0, 92, 151), rgb(54, 55, 149));">
+                                Informacion Escolar
+                            </div>
+                            <div class="panel-content  fg-white fn-bolder" style="background: linear-gradient(to right, rgb(44, 62, 80), rgb(52, 152, 219));">
+                                <div class="span6">Grupo:  --></div>
+                                <div class="span6">${alumnos?.grupo?.Nombre}</div>
+                                <div class="row">
+                                    <div class="span6">Grado:  --></div>
+                                    <div class="span6">${alumnos?.grupo?.grado?.Nombre}</div>
+                                    <div class="row">
+                                        <div class="span6">Periodo: --></div>
+                                        <div class="span6">${alumnos?.grupo?.periodo?.Nombre}</div>
+                                        <div class="row">
+                                            <div class="span6">Carrera: --></div>
+                                            <div class="span6">${alumnos?.grupo?.Carrera?.Nombre}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class="span12 panel"  data-role="panel" >
+                                <div class="panel-header fg-white fn-bolder" style="font-weight: bolder !important; background: linear-gradient(to right, rgb(0, 92, 151), rgb(54, 55, 149));">
+                                    Calificaciones
+                                </div>
+                                <div class="panel-content " style="background: linear-gradient(to right, rgb(44, 62, 80), rgb(52, 152, 219));">
+                                    <div class="row">
+                                        <div class="panel">
+                                            <div class="span12 panel"  data-role="panel" >
+                                                <div class="panel-header  fg-white fn-bolder" style="font-weight: bolder !important; background: linear-gradient(to right, rgb(0, 92, 151), rgb(54, 55, 149));">
+                                                    Periodo Grupo Grado
+                                                </div>
+                                                <div class="panel-content fg-white fn-bolder" style="background: linear-gradient(to right, rgb(44, 62, 80), rgb(52, 152, 219));">
+
+                                                    <div class="accordion" data-role="accordion">
+                                                        <div class="accordion-frame">
+                                                            <a href="#" class="heading fg-white collapsed" style="font-weight: bolder !important; background: linear-gradient(to right, rgb(19, 106, 138), rgb(38, 120, 113));">${Materia.CabeceraCalificaciones()} </a>
+                                                            <div class="content" style="background: linear-gradient(to right, rgb(44, 62, 80), rgb(52, 152, 219));">
+                                                                <div class='row'>
+                                                                    <div  style=" background: linear-gradient(to right, rgb(44, 62, 80), rgb(52, 152, 219)); font-size: bolder; font-size: 2rem; font-family: serif;">Boleta de calificaciones</div>
+                                                                    <table class="table " style="background: linear-gradient(to right, rgb(19, 106, 138), rgb(38, 120, 113));">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Materias</th>
+                                                                                <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Mayo</th>
+                                                                                <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Junio</th>
+                                                                                <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Julio</th>
+                                                                                <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Agosto</th>
+                                                                                <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Proyecto Final</th>
+                                                                                <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Promedio</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            #{list Materia.ObtenerHistorialesMateria(), as: 'hm'}
+                                                                            <tr>
+                                                                                <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'>${hm?.Materia?.Nombre}</td>
+                                                                                #{list hm.Obtenercalificacion(), as: 'c'}
+                                                                                <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'>${c}</td>
+                                                                                #{/list}
+                                                                                #{list 5 - hm.Obtenercalificacion().length, as: 'empty'}
+                                                                                <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'></td>
+                                                                                #{/list}
+                                                                                <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'>${hm?.CalcularPromedio()}</td>
+                                                                            </tr>
+                                                                            #{/list}
+                                                                        </tbody>
+                                                                        <tfoot>
+                                                                            <tr>
+                                                                                <td colspan="6" class="right">Promedio General:</td>
+                                                                                <td class="right">
+                                                                                    %{
+                                                                                    double totalPromedios = 0.0;
+                                                                                    int totalMaterias = Materia.ObtenerHistorialesMateria().size();
+                                                                                    }%
+                                                                                    #{list Materia.ObtenerHistorialesMateria(), as: 'hm'}
+                                                                                    %{
+                                                                                    double promedio = hm?.CalcularPromedio();
+                                                                                    totalPromedios += promedio;
+                                                                                    }%
+                                                                                    #{/list}
+                                                                                    ${totalPromedios / totalMaterias} <!-- Calcular el promedio general -->
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tfoot>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class="span12 panel"data-role="panel" >
+                                    <div class="panel-header fg-white fn-bolder" style="font-weight: bolder !important; background: linear-gradient(to right, rgb(0, 92, 151), rgb(54, 55, 149));">
+                                        Reinscribir
+                                    </div>
+                                    <div class="panel-content  fg-white fn-bolder" style="background: linear-gradient(to right, rgb(44, 62, 80), rgb(52, 152, 219));">
+
+                                        <div class="span12 input-control select">
+                                            <label for="idcarrera">Carrera</label>
+                                            <select  id="idcarrera" onchange="traerperiodo()"  name='carrera' onchange="tabla()">
+
+                                                <option  value="0" >Selecciona la Carrera</option>
+                                                #{list carrera,as: 'C'}
+                                                <option value="${C.id}">${C.Nombre}</option>
+                                                #{/list}
+
+                                            </select>
+                                        </div>
+
+
+                                        <div class=" input-control select" id="Periodo">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class="span12 panel"data-role="panel" >
+                                        <div class="panel-header fg-white fn-bolder" style="font-weight: bolder !important; background: linear-gradient(to right, rgb(0, 92, 151), rgb(54, 55, 149));">
+                                            Historial
+                                        </div>
+                                        <div class="panel-content  fg-white fn-bolder" style="background: linear-gradient(to right, rgb(44, 62, 80), rgb(52, 152, 219));">
+                                            <table class="table" style="background: linear-gradient(to right, rgb(19, 106, 138), rgb(38, 120, 113));">
+                                                <thead>
+                                                    <tr>
+                                                        <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Periodo</th>
+                                                        <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Grupo</th>
+                                                        <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Carrera</th>
+                                                        <th class='text-left' style='display: fixed; border-collapse:collapse; border:1px solid #ccc;'>Accion</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    #{list halumnos, as: 'a'}
+                                                    <tr>
+                                                        <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'>${a.Periodo?.Nombre}</td>
+
+                                                        <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'>${a.grupo?.Nombre}</td>
+
+                                                        <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'>${a.grupo?.Carrera?.Nombre}</td>
+
+                                                        <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'><button id="halum" onclick="eliminar()" value ="${a.id}">Eliminar</button></td>
+                                                    </tr>
+
+                                                    #{/list}
+                                                </tbody>
+                                                <div id="campoborrado"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function traerperiodo() {
+                            var idcarrera = $("#idcarrera").val();
+                            $.get("/Escolares/Periodo", {
+                                "idcarrera": idcarrera
+                            }
+                            , function (respuesta) {
+                                $("#Periodo").html(respuesta);
+                            });
+                        }
+                        function eliminar() {
+                            var halum = $("#halum").val();
+                            $.get("/Escolares/borrarhalumno", {
+                                "halum": halum
+                            }
+                            , function (respuesta) {
+                                $("#campoborrado").html(respuesta);
+                            });
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
