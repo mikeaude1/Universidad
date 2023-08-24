@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <div class="span12 input-control select">
+
+        <label>Grupo</label>
+
+        <select id="grupo">
+
+            <option>Seleccionar</option>
+            #{list grupo, as: 'gp'}
+            <option value="${gp.id}">${gp.Nombre}</option>
+            #{/list}
+        </select>
+
+        <button id="inscribir" onclick="Reinscribir()" class="button fg-white bg-darkBlue place-right" type="button" >Reinscribir</button>
+    </div>
+    <div id="resul">  </div>
+    <script>
+        function Reinscribir() {
+            var grupo = $("#grupo").val();
+            $.get("/Escolares/Generarreinscripcion", {
+                "periodo": "${periodo}",
+                "grupo": grupo,
+                "p": "${p}"
+            }, function (respuesta) {
+                $("#resul").html(respuesta);
+            });
+        }
+    </script>
+</body>
+</html>

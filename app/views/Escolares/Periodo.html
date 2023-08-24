@@ -11,10 +11,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <div class="span6 input-control select">
         <label for="periodo">Periodo</label>
-        <select  id="periodo"   name='periodo' onchange='grupoperiodo()'>
+        <select  id="periodo"   name='periodo' onchange='gruporeinscripcion()'>
             <option value="0">Selecciona el periodo</option>
-            #{list gperiodo, as: 'p'}
-            <option value="${p.id}">${p.Nombre}</option>
+            #{list periodo, as: 'pe'}
+            <option value="${pe.id}">${pe.Nombre}</option>
             #{/list}
         </select>
         <div class=" input-control select" id="selectgrupo">
@@ -22,11 +22,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </div>
 
     <script>
-        function grupoperiodo() {
-            var grupoperiodo = $("#periodo").val();
-            $.get("/Escolares/grupoperiodo", {
-                "periodo": grupoperiodo,
-                "aspirante": "${aspirante}",
+        function gruporeinscripcion() {
+            var periodo = $("#periodo").val();
+            $.get("/Escolares/gruporeinscripcion", {
+                "periodo": periodo,
+                "p": "${p}",
                 "idcarrera": "${idcarrera}"
             }, function (respuesta) {
                 $("#selectgrupo").html(respuesta);

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="${_response_encoding}">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="/public/javascripts/jquery.min.js"></script>
+        <script src="/public/javascripts/jquery.widget.min.js"></script>
+        <script src="/public/javascripts/metro.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+        <link href="/public/images/iconFont.css" rel="stylesheet">
+        <link href="/public/images/metro-bootstrap-responsive.css" rel="stylesheet">
+        <link  href="/public/images/metro-bootstrap.css" rel="stylesheet">
+        <link href="@{'/public/images/fonts/iconFont.woff'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.woff'}">
+        <link href="@{'/public/images/fonts/iconFont.ttf'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.ttf'}">
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+
+        <style>
+
+            .m {
+                background-color: midnightblue;
+                transition: background-color 0.3s ease !important;
+            }
+
+
+            .m:hover {
+                background-color: DeepSkyBlue !important;
+            }
+        </style>
+        <script>
+            $(document).ready(function () {
+                $(".item").hover(
+                        function () {
+                            $(this).addClass("bg-blue");
+                        },
+                        function () {
+                            $(this).removeClass("bg-blue");
+                        }
+                );
+            });
+
+        </script>
+    </head>
+    <body class='metro'>
+        <div>
+            <nav class="navigation-bar bg-darkCobalt"  >
+                <nav class="navigation-bar-content ">
+
+                    <div class="element-divider">...</div>
+                    <div class="element m">Inicio</div>
+                    <div class="element m">Carreras</div>
+                    <div class="element m">Grupos</div>
+                    <div class="element m">
+                        <a class="dropdown-toggle " href="#">Perfil</a>
+                        <ul class="dropdown-menu  fg-darkBlue" data-role="dropdown">
+                            <li><a  href="#">Cambiar contraseña</a></li>
+                            <li><a href="#">Correo y aplicaciones</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Cerrar Sesión</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Salir</a></li>
+                        </ul>
+                    </div>
+
+                </nav>
+                <ul class="dropdown-menu" data-role="dropdown">
+                    <li><a href="#">Main</a></li>
+                    <li><a href="#">File Open</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Print...</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Exit</a></li>
+                </ul>
+
+            </nav>
+            <div id="resultado" style="position: relative;">
+            </div>
+        </div>
+
+        <script>
+
+            $(document).ready(function () {
+                Sidebar();
+            });
+            function Sidebar() {
+                $.get("/Profesor/Sidebar",
+                        function (respuesta) {
+                            $("#resultado").html(respuesta);
+                        });
+            }
+            ;
+        </script>
+        <div style="padding-left: 230px; padding-top: 5px;">
+            #{doLayout /}
+        </div>
+
+    </body>
+</html>

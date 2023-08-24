@@ -44,7 +44,7 @@ public class Escolares extends Controller {
         render(carrera);
     }
 
-    public static void Tablaaspirantes(long idcarrera) {
+    public static void Tablaaspirantes(Long idcarrera) {
         System.out.println(idcarrera);
         List<Registroaspirantes> tablaaspirante = Registroaspirantes.find("carrera.id = ?", idcarrera).fetch();
         render(tablaaspirante, idcarrera);
@@ -64,6 +64,27 @@ public class Escolares extends Controller {
         List<Grupos> grupo = Grupos.find("periodo.id=? AND Carrera.id=?", periodo, idcarrera).fetch();
 
         render(grupo, periodo, aspirante);
+    }
+
+    public static void gruporeinscripcion(Long periodo, Long idcarrera, Long p) {
+        System.out.println(p);
+        List<Grupos> grupo = Grupos.find("periodo.id=? AND Carrera.id=?", periodo, idcarrera).fetch();
+
+        render(grupo, periodo, p);
+    }
+
+    public static void Generarreinscripcion(Long grupo, Long p, Long periodo) {
+        System.out.println(p);
+        Grupos group = Grupos.findById(grupo);
+        Periodo perio = Periodo.findById(periodo);
+        Alumnos alum = Alumnos.findById(p);
+        Historialalumnos historiala = new Historialalumnos();
+        historiala.Periodo = perio;
+        historiala.activo = true;
+        historiala.alumno = alum;
+        historiala.grupo = group;
+        historiala.save();
+        render(historiala);
     }
 
     public static void Generarinscripcion(Long grupo, Long aspirante) {
@@ -110,18 +131,20 @@ public class Escolares extends Controller {
         List<Historialalumnos> halumnos = Historialalumnos.find("alumno.id=? AND activo = true", p).fetch();
         //List<Calificaciones> calificacion = Calificaciones.find("Historialmateria.Historialalumno.id=?", alumnos.id).fetch();
         // System.out.println(calificacion + "sisoy");
-        render(persona, alumnos, Materia, carrera, halumnos);
+        render(persona, alumnos, Materia, carrera, halumnos, p);
     }
 
-    public static void borrarhalumno(long halum) {
+    public static void borrarhalumno(Long halum) {
+        System.out.println(halum);
         Historialalumnos inscripcion = Historialalumnos.find("id=? ", halum).first();
         inscripcion.activo = false;
-        render();
+        inscripcion.save();
+        render(halum);
     }
 
-    public static void Periodo(long idcarrera) {
-        List<Periodo> gperiodo = Periodo.findAll();
-        render(idcarrera, gperiodo);
+    public static void Periodo(Long idcarrera, Long p) {
+        List<Periodo> periodo = Periodo.findAll();
+        render(idcarrera, periodo, p);
     }
 
     public static void Tablabusqueda(String matricula, String nombre, String apaterno, String amaterno) {

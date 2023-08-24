@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body class="metro">
+        <div class="grid">
+            <div id="dataTables_wrapper">
+                <table is="table1" id='myTable' class="table display dataTable hover stripe order-column" style="border-collapse: collapse; border:1px solid black; width:100%;">
+                    <thead>
+                        <tr>
+                            <th  class="text-left sorting sorting_desc" tabindex="0" rowspan='1' colspan="1" arial-label='Name: activate to sort column escending' arial-sort='descending' " >
+                                Nombre
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                Apellido Paterno
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                Apellido Materno
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                calif1
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                calif2
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                calif3
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                calif4
+                            </th>
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                                calif5
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        #{list hmateria, as: 'hm'}
+                        <tr>
+                            <td id="Nombre" class="right " style="border:1px solid black;">
+                                ${hm.Historialalumno.alumno.Persona.Nombre}
+                            </td>
+                            <td id="apaterno" class="right " style="border:1px solid black;">
+                                ${hm.Historialalumno.alumno.Persona.ApellidoPaterno}
+                            </td>
+                            <td id="amaterno" class="right " style="border:1px solid black;" data-hmateria="${hm.id}">
+                                ${hm.Historialalumno.alumno.Persona.ApellidoMaterno}
+                            </td>
+                            #{list hm.Obtenercalificacion(), as: 'cal'}
+
+                            <td  id="calif" style="border:1px solid black;"data-calif="hm.Obtenercalifa()" >
+
+                                <input id="input" type='numeric' value='${cal}' onchange='nuevacalificacion()'></input>
+
+                            </td>
+
+                            #{/list}
+                        </tr>
+                        #{/list}
+                    </tbody>
+                    <script>
+
+                        function nuevacalificacion() {
+                            var input = $("#input").val();
+                            var calificacion = $("#calif").data("calif");
+                            var hmateria = $("#amaterno").data("hmateria");
+                            $.get("/Profesor/nuevacalificacion", {
+                                "input": input,
+                                "calificacion": calificacion,
+                                "hmateria": hmateria
+                            }, function (data) {
+
+                            });
+                        }
+                    </script>
+
+                    <tfoot></tfoot>
+                </table>
+
+            </div>
+    </body>
+</html>

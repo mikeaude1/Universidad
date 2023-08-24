@@ -28,10 +28,16 @@ public class Historialmateria extends Model {
         return tabla;
     }
 
+    public List Obtenercalifa() {
+        List<Calificaciones> calificacion = Calificaciones.find("Historialmateria.id=?", this.id).fetch();
+
+        return calificacion;
+    }
+
     public double CalcularPromedio() {
         List<Calificaciones> calificaciones = Calificaciones.find("Historialmateria = ?", this).fetch();
         double total = 0.0;
-        int count = 0; // Contador para calificaciones válidas
+        int count = 0;
 
         for (Calificaciones calificacion : calificaciones) {
             if (calificacion.Calificacion != 0) {

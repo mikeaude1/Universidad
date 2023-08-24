@@ -53,20 +53,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
              style="top: 130px !important">
             <div class="row">
                 <div class="span3 bg-blue fg-white fn-bolder " id ="sidebar" >
-                    <nav class="sidebar" >
+                    <nav class="sidebar dark bg-violete " >
                         <ul>
-                            <li class="title">Menu</li>
-                            <li><a class="item" href="/Escolares/Registroaspirantes"><i class="icon-home"></i>Registro de Aspirantes</a></li>
-                            <li class="stick "><a class="item" href="/Escolares/Inscribiralumno"><i class="icon-clipboard-2"></i>Inscribir Alumno</a></li>
-                            <li class="stick bg-yellow">
-                                <a class="item" href="/Escolares/Buscaralumno"><i class="icon-search"></i>Buscar Alumno</a>
+                            <li class="stick ">
+                                <a class= "title dropdown-toggle">Menu</a>
+                                <ul class="dropdown-menu bg-darkCobalt" data-role="dropdown">
+                                    <li><a class="item" href="/Profesor/Calificaciones"><i class="icon-list"></i>Calificaciones</a></li>
+                                    <li class="stick "><a class="item" href="#"><i class="icon-award-fill"></i>Asistencias</a></li>
+                                    <li class="stick ">
+                                        <a class="item" href="#"><i class="icon-stats-2"></i>Historial</a>
+                                    </li>
+                                    <li class="stick bg-green"><a class="item" href="#"><i Class="icon-coins"></i>Nomina</a></li>
+                                </ul>
                             </li>
-                            <li class="stick bg-green"><a class="item" href="#"><i Class="icon-cube"></i>Estructura</a></li>
-                            <li class="title">Finanzas</li>
-                            <li><a class="item" href="#"><i class="icon-dollar-2"></i>Capturar Pago</a></li>
-                            <li><a class="item" href="#"><i class="icon-files"></i>Reporte</a></li>
-                            <li class="title">Alumno</li>
-                            <li><a  class="item" href="#"><i class="icon-diary"></i>Expediente</a></li>
+                            <li class="stick ">
+                                <a class= "title dropdown-toggle">Externo</a>
+                                <ul class="dropdown-menu bg-darkCobalt" data-role="dropdown">
+                                    <li><a class="item" href="#"><i class=" icon-calendar"></i>Calendario</a></li>
+                                    <li><a class="item" href="#"><i class="icon-puzzle"></i>Proyecta</a></li>
+                                </ul>
+                            </li>
+                            <li class="stick ">
+                                <a class="title dropdown-toggle">Extra</a>
+                                <ul class="dropdown-menu bg-darkCobalt" data-role="dropdown">
+                                    <li><a  class="item" href="#"><i class=" icon-bookmark-2"></i>Capacitaciones</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
                 </div>
