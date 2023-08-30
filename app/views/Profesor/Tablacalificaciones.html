@@ -12,28 +12,28 @@
                 <table is="table1" id='myTable' class="table display dataTable hover stripe order-column" style="border-collapse: collapse; border:1px solid black; width:100%;">
                     <thead>
                         <tr>
-                            <th  class="text-left sorting sorting_desc" tabindex="0" rowspan='1' colspan="1" arial-label='Name: activate to sort column escending' arial-sort='descending' " >
+                            <th  class="text-left sorting sorting_desc" tabindex="0" rowspan='1' colspan="1"style="border:1px solid black;" >
                                 Nombre
                             </th>
-                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
                                 Apellido Paterno
                             </th>
-                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
                                 Apellido Materno
                             </th>
-                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
                                 calif1
                             </th>
-                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
                                 calif2
                             </th>
-                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
                                 calif3
                             </th>
-                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
                                 calif4
                             </th>
-                            <th class="text-left sorting_desc" rowspan='1' colspan="1">
+                            <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
                                 calif5
                             </th>
                         </tr>
@@ -47,34 +47,56 @@
                             <td id="apaterno" class="right " style="border:1px solid black;">
                                 ${hm.Historialalumno.alumno.Persona.ApellidoPaterno}
                             </td>
-                            <td id="amaterno" class="right " style="border:1px solid black;" data-hmateria="${hm.id}">
+                            <td id="amaterno" class="right " style="border:1px solid black;" >
                                 ${hm.Historialalumno.alumno.Persona.ApellidoMaterno}
                             </td>
-                            #{list hm.Obtenercalificacion(), as: 'cal'}
 
-                            <td  id="calif" style="border:1px solid black;"data-calif="hm.Obtenercalifa()" >
 
-                                <input id="input" type='numeric' value='${cal}' onchange='nuevacalificacion()'></input>
-
+                            <td id="unidad1${
+                                    hm.id
+                                }" style="border:1px solid black;" data-calif='${hm.Obtenercalifa(1)!= 0? hm.Obtenercalifa(1) : "X"}' data-hmateria="${hm.id}">
+                                <input type='numeric' value='${hm.Obtenercalifa(1)!= 0 ? hm.Obtenercalifa(1) : "X"}' onchange='nuevacalificacion(${hm.id}, 1, this.value)'>
+                            </td>
+                            <td id="unidad2${
+                                    hm.id
+                                }" style="border:1px solid black;" data-calif='${hm.Obtenercalifa(2)!= 0 ? hm.Obtenercalifa(2) : "X"}'data-hmateria="${hm.id}">
+                                <input type='numeric' value='${hm.Obtenercalifa(2)!= 0 ? hm.Obtenercalifa(2) : "X"}' onchange='nuevacalificacion(${hm.id}, 2, this.value)'>
+                            </td>
+                            <td id="unidad3${
+                                    hm.id
+                                }"style="border:1px solid black;" data-calif='${hm.Obtenercalifa(3)!= 0 ? hm.Obtenercalifa(3) : "X"}' data-hmateria="${hm.id}">
+                                <input type='numeric' value='${hm.Obtenercalifa(3)!= 0 ? hm.Obtenercalifa(3) : "X"}' onchange='nuevacalificacion(${hm.id}, 3, this.value)'>
+                            </td>
+                            <td id="unidad4${
+                                    hm.id
+                                }" style="border:1px solid black;" data-calif='${hm.Obtenercalifa(4)!= 0 ? hm.Obtenercalifa(4) : "X"}' data-hmateria="${hm.id}">
+                                <input type='numeric' value='${hm.Obtenercalifa(4)!= 0 ? hm.Obtenercalifa(4) : "X"}' onchange='nuevacalificacion(${hm.id}, 4, this.value)'>
+                            </td>
+                            <td id="unidad5${
+                                    hm.id
+                                }" style="border:1px solid black;" data-calif='${hm.Obtenercalifa(5)!= 0 ? hm.Obtenercalifa(5) : "X"}' data-hmateria="${hm.id}">
+                                <input type='numeric' value='${hm.Obtenercalifa(5)!= 0 ? hm.Obtenercalifa(5) : "X"}' onchange='nuevacalificacion(${hm.id}, 5, this.value)'>
                             </td>
 
-                            #{/list}
                         </tr>
                         #{/list}
                     </tbody>
                     <script>
 
-                        function nuevacalificacion() {
-                            var input = $("#input").val();
-                            var calificacion = $("#calif").data("calif");
-                            var hmateria = $("#amaterno").data("hmateria");
-                            $.get("/Profesor/nuevacalificacion", {
-                                "input": input,
+                        function nuevacalificacion(hmateria, unidad, calificacion) {
+                        var auxiliar = $("#unidad" + unidad + hmateria).data("calif");
+                        var unidad = unidad;
+                        var calificacion = calificacion;
+                        var hmateria = hmateria;
+                        $.get("/Profesor/nuevacalificacion", {
+
+                        "unidad": unidad,
+                                "auxiliar":auxiliar,
                                 "calificacion": calificacion,
                                 "hmateria": hmateria
-                            }, function (data) {
+                        }, function (data) {
 
-                            });
+                        });
                         }
                     </script>
 

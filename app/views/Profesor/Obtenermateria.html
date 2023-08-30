@@ -14,7 +14,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <label for='materia'>Materia</label>
             <select id='hdocente' onchange='traertabla()'>
                 <option value='0'>Selecciona la Materia</option>
-                #{list historiald, as: 'hd'}
+                #{list hdocente, as: 'hd'}
+
                 <option value='${hd.id}'>${hd.materia?.Nombre}         ${hd.persona.Nombre} ${hd.persona.ApellidoPaterno} ${hd.persona.ApellidoMaterno}  ${hd.grupo.id} ${hd.grupo.Nombre}</option>
                 #{/list}
 
@@ -28,7 +29,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             function traertabla() {
                 var hdocente = $("#hdocente").val();
                 $.post("/Profesor/Tablacalificaciones", {
-                    "hmaterial": "${hmaterial}",
+
                     "hdocente": hdocente,
                     "periodo": "${periodo}"
                 }, function (respuesta) {

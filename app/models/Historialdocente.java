@@ -20,4 +20,17 @@ public class Historialdocente extends Model {
     @OneToOne
     public Personas persona;
 
+    public Boolean tienehm() {
+        Historialmateria hmateria = hmateria = Historialmateria.find("Historialalumno.grupo=? And Materia=? AND Historialalumno.grupo.periodo=?", this.grupo, this.materia, this.grupo.periodo).first();
+
+        if (hmateria != null) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+
+    }
+
 }

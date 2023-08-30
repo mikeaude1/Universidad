@@ -15,8 +15,12 @@ public class Calificaciones extends Model {
     @OneToOne
     public Historialmateria Historialmateria;
     public int Calificacion;
+    public int Unidad;
 
     public String toString() {
+
         return String.valueOf(Calificacion);
+
     }
+
 }
