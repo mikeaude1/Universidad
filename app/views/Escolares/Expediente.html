@@ -1,4 +1,4 @@
-#{extends 'main.html' /}
+#{extends 'Menuintro.html' /}
 <!DOCTYPE html>
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -100,12 +100,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                                                         #{list h.ObtenerHistorialesMateria(), as: 'hm'}
                                                                         <tr>
                                                                             <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'>${hm?.Materia?.Nombre}</td>
-                                                                            #{list hm.Obtenercalificacion(), as: 'c'}
-                                                                            <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'>${c}</td>
-                                                                            #{/list}
-                                                                            #{list 5 - hm.Obtenercalificacion().length, as: 'empty'}
-                                                                            <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'></td>
-                                                                            #{/list}
+                                                                            <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'> ${hm.Obtenercalifa(1)!= 0 ? hm.Obtenercalifa(1) : "X"}</td>
+                                                                            <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'> ${hm.Obtenercalifa(2)!= 0 ? hm.Obtenercalifa(2) : "X"}</td>
+                                                                            <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'> ${hm.Obtenercalifa(3)!= 0 ? hm.Obtenercalifa(3) : "X"}</td>
+                                                                            <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'> ${hm.Obtenercalifa(4)!= 0 ? hm.Obtenercalifa(4) : "X"}</td>
+                                                                            <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'> ${hm.Obtenercalifa(5)!= 0 ? hm.Obtenercalifa(5) : "X"}</td>
                                                                             <td class='right' style='display: fixed; border-collapse: collapse; border: 1px solid #ccc;'>${hm?.CalcularPromedio()}</td>
                                                                         </tr>
                                                                         #{/list}

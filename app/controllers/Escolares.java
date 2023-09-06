@@ -9,17 +9,28 @@ import models.*;
 
 public class Escolares extends Controller {
 
-    public static void index() {
-        render();
+    @Before
+    static void checkAuth() {
+
+        String idusuario = session.get("idusuario");
+        long idusuarios = Long.parseLong(idusuario);
+        Usuarios usuario = Usuarios.findById(idusuarios);
+        try {
+            Accesos acceso = Accesos.find("usuario.id=? AND perfil.Nivelacceso=?", usuario.id, 1).first();
+
+            if (acceso == null) {
+                flash.error("Debes iniciar sesión para acceder a esta página.");
+                redirect("/Externo/Login");
+            }
+        } catch (Exception e) {
+            flash.error("Ocurrió un error al verificar la autenticación.");
+            redirect("/Externo/Login");
+        }
     }
 
     public static void Registroaspirantes() {
         List<Carreras> carrera = Carreras.findAll();
         render(carrera);
-    }
-
-    public static void Sidebar() {
-        render();
     }
 
     public static void Guardaraspirantes(String Nombre, String Apaterno, String Amaterno, String folio, Long carrera) {

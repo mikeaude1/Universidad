@@ -53,20 +53,45 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
              style="top: 130px !important">
             <div class="row">
                 <div class="span3 bg-blue fg-white fn-bolder " id ="sidebar" >
-                    <nav class="sidebar" >
+                    <nav class="sidebar dark bg-violete " >
                         <ul>
-                            <li class="title">Menu</li>
-                            <li><a class="item" href="/Escolares/Registroaspirantes"><i class="icon-home"></i>Registro de Aspirantes</a></li>
-                            <li class="stick "><a class="item" href="/Escolares/Inscribiralumno"><i class="icon-clipboard-2"></i>Inscribir Alumno</a></li>
-                            <li class="stick bg-yellow">
-                                <a class="item" href="/Escolares/Buscaralumno"><i class="icon-search"></i>Buscar Alumno</a>
+                            <li class="stick ">
+                                <a class= "title dropdown-toggle">Profesores</a>
+                                <ul class="dropdown-menu bg-darkCobalt" data-role="dropdown">
+                                    #{list menu, as: 'm'}
+                                    #{if m.Perfil.id == 2L}
+                                    <li><a  href="${m.Ruta}"><i class="${
+                                                                    m.Icono
+                                                                }"></i>${m.Elmento}</a></li>
+                                    #{/if}
+                                    #{/list}
+
+                                </ul>
                             </li>
-                            <li class="stick bg-green"><a class="item" href="#"><i Class="icon-cube"></i>Estructura</a></li>
-                            <li class="title">Finanzas</li>
-                            <li><a class="item" href="#"><i class="icon-dollar-2"></i>Capturar Pago</a></li>
-                            <li><a class="item" href="#"><i class="icon-files"></i>Reporte</a></li>
-                            <li class="title">Alumno</li>
-                            <li><a  class="item" href="#"><i class="icon-diary"></i>Expediente</a></li>
+                            <li class="stick ">
+                                <a class= "title dropdown-toggle">Alumnos</a>
+                                <ul class="dropdown-menu bg-darkCobalt" data-role="dropdown">
+                                    #{list menu, as: 'ma'}
+                                    #{if ma.Perfil.id == 1L}
+                                    <li><a  href="${ma.Ruta}"><i class="${
+                                                                     ma.Icono
+                                                                 }"></i>${ma.Elmento}</a></li>
+                                    #{/if}
+                                    #{/list}
+                                </ul>
+                            </li>
+                            <li class="stick ">
+                                <a class="title dropdown-toggle">Administrar</a>
+                                <ul class="dropdown-menu bg-darkCobalt" data-role="dropdown">
+                                    #{list menu, as: 'mal'}
+                                    #{if mal.Perfil.id == 3L}
+                                    <li><a  href="${mal.Ruta}"><i class="${
+                                                                      mal.Icono
+                                                                  }"></i>${mal.Elmento}</a></li>
+                                    #{/if}
+                                    #{/list}
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
                 </div>

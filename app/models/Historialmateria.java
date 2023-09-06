@@ -14,18 +14,15 @@ public class Historialmateria extends Model {
     @OneToOne
     public Materias Materia;
 
-    public String[] Obtenercalificacion() {
-        List<Calificaciones> historial = Calificaciones.find("Historialmateria=?", this).fetch();
-        String[] tabla = new String[5];
-        for (int i = 0; i < 5; i++) {
-            if (i < historial.size()) {
-                Calificaciones calificacion = historial.get(i);
-                tabla[i] = calificacion != null ? calificacion.toString() : "x";
-            } else {
-                tabla[i] = "x";
-            }
+    public int Obtenercalificacion(int unidad) {
+
+        Calificaciones calif = Calificaciones.find("Historialmateria.id=? AND Unidad=?", this, unidad).first();
+        if (calif == null) {
+            return 0;
+        } else {
+            return calif.Calificacion;
         }
-        return tabla;
+
     }
 
     public int Obtenercalifa(int a) {

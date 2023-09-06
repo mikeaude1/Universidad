@@ -53,6 +53,7 @@
         </script>
 
 
+
     </head>
     <body class="metro" style="margin: 0 auto; position:sticky;">
 
@@ -90,13 +91,14 @@
         <div id="resultado" style="position: relative;">
 
         </div>
+
         <script>
 
             $(document).ready(function () {
                 Sidebar();
             });
             function Sidebar() {
-                $.get("/Escolares/Sidebar",
+                $.get("/Interno/Sidebar",
                         function (respuesta) {
                             $("#resultado").html(respuesta);
                         });

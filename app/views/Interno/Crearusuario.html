@@ -1,0 +1,69 @@
+#{extends 'Menuintro.html' /}
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style> input{
+
+                padding: .2rem;
+            }
+            .a{
+                margin-left: 10rem;
+                font-family: serif;
+            }
+            label{
+                font-family: serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="row">
+            <div class="span5 offset2 bg-cyan  image-container elements" style='border-radius: 1em;'>
+                <div class="grid">
+                    <div class="row">
+                        <h2 class="fn-bolder fg-white" style="margin-left: 6rem;font-family: serif; font-weight: bolder;"> Crear un usuario Nuevo</h2>
+                        <div class="bg-cyan fg-white text span6 "data-role="input-control"style="margin-left: 10rem;">
+
+                            <image  style="font-family: serif; width: 70px; height: auto;margin-left: 12% "src='https://png.pngtree.com/png-vector/20190321/ourlarge/pngtree-vector-users-icon-png-image_856952.jpg'>
+                            <label for='Nombre' >Nombre</label>
+                            <input id='Nombre' type='text' autofocus >
+                        </div>
+                        <div class="a fg-white" data-role="input-control" >
+                            <label for='apaterno'>Apellido Paterno</label>
+                            <input id='apaterno' type='text' autofocus >
+                        </div>
+                        <div class=" a fg-white" data-role="input-control" >
+                            <label for='amaterno'>Apellido Materno</label>
+                            <input id='amaterno' type='text' autofocus >
+                        </div>
+                        <div class="a fg-white" data-role="input-control" >
+                            <label for='perfil'>Perfil de Acceso</label>
+                            <input id='perfil' type='numeric' autofocus >
+                        </div>
+                        <div class="fg-white a" data-role="input-control" >
+                            <label for='usuario'>Usuario</label>
+                            <input id='usuario' type='text' autofocus '>
+                        </div>
+                        <div class="password a fg-white" data-role="input-control" >
+                            <label for='password'>Contraseña</label>
+                            <input id='password' type="password" autofocus  >
+                        </div>
+                        <div class="password a fg-white" data-role="input-control" >
+                            <label for='password'>Confirmar Contraseña</label>
+                            <input id='password' type="password" autofocus >
+                        </div>
+                        <div class='span12 'style="  margin-top:1rem; width:44.5%">
+                            <button class="bg-darkCyan fg-white fn-bolder btn-reveal" style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;'>Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

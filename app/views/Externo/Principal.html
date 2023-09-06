@@ -1,0 +1,48 @@
+#{extends 'Menuintro.html' /}
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="row">
+            <div class="span5 offset2 bg-cyan  image-container elements" style='border-radius: 1em;'>
+                <div class="grid">
+                    <div class="row">
+                        <p class="fn-bolder fg-white" style="margin-left: 8rem;font-family: serif; font-weight: bolder;">Bienvenido ${usua.Persona.Nombre} ${usua.Persona.ApellidoPaterno} ${usua.Persona.ApellidoMaterno} <br> tus opciones son las siguientes.</p>
+                        <image  style="font-family: serif; width: 70px; height: auto;margin-left: 15rem;"src='https://png.pngtree.com/png-vector/20190321/ourlarge/pngtree-vector-users-icon-png-image_856952.jpg'>
+                        #{list acceso,as: 'a'}
+
+                        <div class="bg-cyan fg-white text span6 "data-role="input-control"style="margin-left: 10rem;">
+
+                            <label for='${usua.id}+${a.id}' >Ingresar como ${a.perfil.Nombreperfil}</label>
+                        </div>
+                        <div class='span12 'style=" margin-left: 35%; margin-top:1rem; width:44.5%; ">
+                            #{if a.perfil.id == 1}
+                            <a href="../Escolares/Buscaralumno" type="button" class="bg-darkCyan fg-white fn-bolder btn-reveal"  style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;padding-left:1rem;padding-right:1rem;'>${a.perfil.Nombreperfil}</a>
+                            #{/if}
+                            #{if a.perfil.id == 2}
+                            <a href="../Profesor/Calificaciones" type="button" class="bg-darkCyan fg-white fn-bolder btn-reveal"  style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;padding-left:1rem;padding-right:1rem;'>${a.perfil.Nombreperfil}</a>
+                            #{/if}
+                            #{if a.perfil.id == 3}
+                            <a href="../Interno/Administrador" type="button" class="bg-darkCyan fg-white fn-bolder btn-reveal"  style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;padding-left:1rem;padding-right:1rem;'>${a.perfil.Nombreperfil}</a>
+                            #{/if}
+                            #{if a.perfil.id == 4}
+                            <a href="../Interno/Administrador" type="button" class="bg-darkCyan fg-white fn-bolder btn-reveal"  style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;padding-left: 1rem;padding-right:1rem;'>${a.perfil.Nombreperfil}</a>
+                            #{/if}
+                        </div>
+                        #{/list}
+                        %{String idusuario = session.get("idusuario");
+                        }%
+                        ${idusuario}
+                    </div>
+                </div>
+            </div>
+    </body>
+</html>

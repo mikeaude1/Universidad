@@ -1,10 +1,6 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
+
 <html>
-    <head>
     <head>
         <title>#{get 'title' /}</title>
         <meta charset="UTF-8">
@@ -55,59 +51,51 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             });
 
         </script>
+
+
+
     </head>
-    <body class='metro'>
-        <div>
-            <nav class="navigation-bar bg-darkCobalt"  >
-                <nav class="navigation-bar-content ">
+    <body class="metro" style="margin: 0 auto; position:sticky;">
 
-                    <div class="element-divider">...</div>
-                    <div class="element m">Inicio</div>
-                    <div class="element m">Carreras</div>
-                    <div class="element m">Grupos</div>
-                    <div class="element m">
-                        <a class="dropdown-toggle " href="#">Perfil</a>
-                        <ul class="dropdown-menu  fg-darkBlue" data-role="dropdown">
-                            <li><a  href="#">Cambiar contraseña</a></li>
-                            <li><a href="#">Correo y aplicaciones</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Cerrar Sesión</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Salir</a></li>
-                        </ul>
-                    </div>
+        <nav class="navigation-bar bg-darkBlue"  >
+            <nav class="navigation-bar-content ">
 
-                </nav>
-                <ul class="dropdown-menu" data-role="dropdown">
-                    <li><a href="#">Main</a></li>
-                    <li><a href="#">File Open</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Print...</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Exit</a></li>
-                </ul>
+                <div class="element-divider">...</div>
+                <div class="element m">Calendario</div>
+                <div class="element m">Carreras</div>
+                <div class="element m">Alumnos</div>
+                <div class="element m">
+                    <a class="dropdown-toggle " href="#">Menu</a>
+                    <ul class="dropdown-menu  fg-darkBlue" data-role="dropdown">
+                        <li><a  href="#">Main</a></li>
+                        <li><a href="#">File Open</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Print...</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Exit</a></li>
+                    </ul>
+                </div>
 
             </nav>
-            <div id="resultado" style="position: relative;">
-            </div>
+            <ul class="dropdown-menu" data-role="dropdown">
+                <li><a href="#">Main</a></li>
+                <li><a href="#">File Open</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Print...</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Exit</a></li>
+            </ul>
+
+        </nav>
+
+        <div id="resultado" style="position: relative;">
+
         </div>
 
-        <script>
 
-            $(document).ready(function () {
-                Sidebar();
-            });
-            function Sidebar() {
-                $.get("/Profesor/Sidebar",
-                        function (respuesta) {
-                            $("#resultado").html(respuesta);
-                        });
-            }
-            ;
-        </script>
+
         <div style="padding-left: 230px; padding-top: 5px;">
             #{doLayout /}
         </div>
-
     </body>
 </html>

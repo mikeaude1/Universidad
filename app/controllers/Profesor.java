@@ -7,8 +7,28 @@ import java.util.*;
 import models.*;
 import models.Periodo;
 import static play.db.jpa.GenericModel.findAll;
+import play.mvc.Before;
 
 public class Profesor extends Controller {
+
+    @Before
+    static void checkAuth() {
+
+        String idusuario = session.get("idusuario");
+        long idusuarios = Long.parseLong(idusuario);
+        Usuarios usuario = Usuarios.findById(idusuarios);
+        try {
+            Accesos acceso = Accesos.find("usuario.id=? AND perfil.Nivelacceso=?", usuario.id, 2).first();
+
+            if (acceso == null) {
+                flash.error("Debes iniciar sesión para acceder a esta página.");
+                redirect("/Externo/Login");
+            }
+        } catch (Exception e) {
+            flash.error("Ocurrió un error al verificar la autenticación.");
+            redirect("/Externo/Login");
+        }
+    }
 
     public static void index() {
         render();
@@ -54,9 +74,9 @@ public class Profesor extends Controller {
         System.out.println(auxiliar);
         System.out.println(auxiliar);
         Historialmateria historialMateria = Historialmateria.findById(hmateria);
-        Calificaciones calif = Calificaciones.find("Historialmateria.id=?", hmateria).first();
+        Calificaciones calif = Calificaciones.find("Historialmateria.id=? AND Unidad=?", hmateria, unidad).first();
 
-        if (auxiliar != 0) {
+        if (calif != null) {
 
             calif.activo = true;
             calif.Calificacion = calificacion;
