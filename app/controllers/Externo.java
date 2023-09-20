@@ -7,6 +7,7 @@ import java.util.*;
 
 import models.*;
 import models.Periodo;
+import play.libs.Codec;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Externo extends Controller {
         Usuarios usua = Usuarios.find("Nombreusuario=? AND Contraseña=? AND Activo=?", usuario, password, true).first();
         System.out.println(usua);
         if (usua != null) {
-
+            usua.setContraseña(password);
             session.put("idusuario", usua.id);
             redirect("/Interno/Perfilusuario");
         } else {

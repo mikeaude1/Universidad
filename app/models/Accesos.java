@@ -10,6 +10,7 @@ import play.db.jpa.Model;
 @Entity
 public class Accesos extends Model {
 
+    public boolean activo;
     @OneToOne
     public Usuarios usuario;
     @OneToOne

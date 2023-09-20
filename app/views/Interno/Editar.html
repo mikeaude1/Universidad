@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="${_response_encoding}">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="/public/javascripts/jquery.min.js"></script>
+        <script src="/public/javascripts/jquery.widget.min.js"></script>
+        <script src="/public/javascripts/metro.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+        <link href="/public/images/iconFont.css" rel="stylesheet">
+        <link href="/public/images/metro-bootstrap-responsive.css" rel="stylesheet">
+        <link  href="/public/images/metro-bootstrap.css" rel="stylesheet">
+        <link href="@{'/public/images/fonts/iconFont.woff'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.woff'}">
+        <link href="@{'/public/images/fonts/iconFont.ttf'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/images/fonts/metroSysIcons.ttf'}">
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+    </head>
+    <body class="metro">
+        <div class='grid'>
+            <div class='row'>
+                <div class='span12'>
+                    <form class="user-input">
+                        <label>Nombre</label>
+                        <div class="input-control text"><input id="nombre" type="text" name="nombre"><button class="btn-clear"></button></div>
+                        <label>Apaterno</label>
+                        <div class="input-control text"><input id="apaterno" type="text" name="apaterno"><button class="btn-clear"></button></div>
+                        <label>Amaterno</label>
+                        <div class="input-control text"><input id="amaterno" type="text" name="amaterno"><button class="btn-clear"></button></div>
+                        <label>Usuario</label>
+                        <div class="input-control text"><input id="usuario" type="text" name="usuario"><button class="btn-clear"></button></div>
+                        <label>Password</label>
+                        <div class="input-control password"><input id="password" type="password" name="password"><button class="btn-reveal"></button></div>
+                        <div class="panel">
+                            <div class="panel-header bg-lightBlue fg-white">
+                                Perfiles
+                            </div>
+                            <div class="panel-content">
+                                <div class="grid">
+                                    <div class="row">
+                                        <div class="span4">Perfiles Activos
+
+                                            <ul>
+                                                #{list allperfiles, as: 'perfil'}
+                                                #{if perfil.Traerperfil(usua.id)}
+                                                <li >${perfil.Nombreperfil} <button class="icon-arrow-rigth-4" onclick="activarDesactivar(${usua.id}, ${perfil.id}, 1)"></button></li>
+                                                #{/if}
+                                                #{/list}
+                                            </ul>
+                                        </div>
+                                        <div class="span4">Perfiles Inactivos
+                                            <ul>
+                                                #{list allperfiles, as: 'perfil'}
+                                                #{if !perfil.Traerperfil(usua.id)}
+                                                <li >>${perfil.Nombreperfil} <button class="icon-arrow-rigth-4" onclick="activarDesactivar(${usua.id}, ${perfil.id}, 2);"></button></li>
+                                                #{/if}
+                                                #{/list}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script>function activarDesactivar(usuario, perfil, activo) {
+                            $.post("/Interno/activarDesactivarPerfil", {
+                            "usuario":usuario,
+                                    "perfil":perfil,
+                                    "activo":activo
+                            }, function(data) {
+                            if (data.success) {
+                            // La función se ejecutó con éxito
+                            console.log("Perfil activado/desactivado con éxito.");
+                            } else {
+                            // Hubo un error
+                            console.error("Error al activar/desactivar el perfil.");
+                            }
+                            });
+                            }
+                        </script>
+                        <div class="form-actions">
+                            <button class="button primary" onclick="GuardarCambios(id)">Guardar Cambios</button>&nbsp;
+                            <button class="button" type="button" onclick="$.Dialog.close()">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
