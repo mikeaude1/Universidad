@@ -33,11 +33,17 @@
                                             <tbody>
                                                 #{list allusers,as: 'us'}
                                                 <tr id="${
-                                                        us.id
+                                                    us.id
                                                     }">
-                                                    <td >${us?.Persona?.Nombre} ${us?.Persona?.ApellidoPaterno} ${us?.Persona?.ApellidoMaterno}</td>
-                                                    <td>${us?.Nombreusuario}</td>
-                                                    <td>${us?.Contraseña}</td>
+                                                    <td id="nombre${
+                                                        us.id
+                                                        }">${us?.Persona?.Nombre} ${us?.Persona?.ApellidoPaterno} ${us?.Persona?.ApellidoMaterno}</td>
+                                                    <td id="usuario${
+                                                        us.id
+                                                        }">${us?.Nombreusuario}</td>
+                                                    <td id="password${
+                                                        us.id
+                                                        }">${us?.Contraseña}</td>
                                                     <td>${us.Traerperfiles().size()}</td>
                                                     <td><button id="createFlatWindow" onclick='Editar(${us.id})'>Editar</button></td>
                                                     <td><button onclick='Eliminar(${us.id})'>Eliminar</button></td>
@@ -75,38 +81,51 @@
             });
             });
             function Editar(id) {
-
-            /* $.get("/Interno/Editar", {
-             "acceso": acceso
-             }, function(data) {
-             $("input[name='nombre']").val(data.nombre);
-             $("input[name='apaterno']").val(data.apaterno);
-             $("input[name='amaterno']").val(data.amaterno);
-             $("input[name='usuario']").val(data.usuario);
-             $("input[name='password']").val(data.password);
-             $("select[name='perfil']").val(data.perfil);*/
-            // Abre el diálogo de edición cuando se completa la obtención de datos.
-            AbrirDialogo("/Interno/Editar?usuario=" + id, id);
-            //          });
-
+            AbrirDialogo("/Interno/Editar?usuario=" + id);
             }
             // Función para abrir el diálogo de edición.
-            function AbrirDialogo(ruta, id)
-            {
+            function AbrirDialogo(ruta) {
             $.get(ruta, function(data) {
             $.Dialog({
             overlay: true,
                     shadow: true,
                     flat: true,
                     draggable: true,
-                    icon: '',
-                    title: 'Editar Usuario',
-                    content: data,
+                    icon: '<img src="https://cdn-icons-png.flaticon.com/512/269/269074.png">',
+                    title: 'Editar usuario now',
+                    content: '',
+                    closeButton: true,
                     padding: 10,
-                    onShow: function(_dialog) {
-
-                    $.Dialog.title("Editar");
+                    close: function(){
+                    $.Dialog.close();
+                    },
+                    actions: [ // Botones de acción personalizados
+                    {
+                    caption: "Aceptar",
+                            cls: "js-dialog-close", // Clase para cerrar el diálogo
+                            onclick: function () {
+                            // Acciones al hacer clic en Aceptar
+                            }
+                    },
+                    {
+                    caption: "Cancelar",
+                            cls: "js-dialog-close",
+                            onclick: function () {
+                            // Acciones al hacer clic en Cancelar
+                            }
                     }
+                    ],
+                    onShow: function(_dialog) {
+                    var content = data + '<button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> '
+                            $.Dialog.title("User login");
+                    $.Dialog.content(content);
+                    $.Dialog.title("Editarusuario");
+                    $.Metro.initInputs();
+                    }, 
+                    onClose:function (_dialog) {
+                        $.Dialog.close()
+                    }
+                    
             });
             $("input[name='nombre']").val(data.nombre);
             $("input[name='apaterno']").val(data.apaterno);
@@ -115,12 +134,10 @@
             $("input[name='password']").val(data.password);
             });
             }
-
-            // Función para guardar los cambios en el servidor.
-
-
+            //Función para guardar los cambios en el servidor.
             function GuardarCambios(id) {
             // Obtén los valores del formulario.
+
             var nombre = $("input[name='nombre']").val().trim();
             var apaterno = $("input[name='apaterno']").val().trim();
             var amaterno = $("input[name='amaterno']").val().trim();
@@ -140,10 +157,10 @@
                     "amaterno": amaterno,
                     "usuarioS": usuarioS,
                     "password": password,
-            }, function(data) {
-            if (data.message) {
+            }, function(data2) {
+            if (data2 == "success") {
             // Actualiza la fila en la tabla con los nuevos datos si es necesario.
-            ActualizarFilaEnTabla(usuarioS, nombre, apaterno, amaterno, password, usuario, perfil);
+            ActualizarFilaEnTabla(usuarioS, nombre, apaterno, amaterno, password, id);
             if (cerrarDialogo) {
             // Cierra el diálogo solo si no hay campos vacíos
             $.Dialog.close();
@@ -158,13 +175,13 @@
 
 
             // Función para actualizar la fila en la tabla.
-            function ActualizarFilaEnTabla(usuarioS, nombre, apaterno, amaterno, password, usuario, perfil) {
-            // Actualiza la fila con los nuevos datos.
-            var fila = $("#" + id);
-            fila.find("td:eq(0)").text(nombre + " " + apaterno + " " + amaterno);
-            fila.find("td:eq(1)").text(usuarioS);
-            fila.find("td:eq(2)").text(password);
-            fila.find("td:eq(3)").text(perfil);
+            function ActualizarFilaEnTabla(usuarioS, nombre, apaterno, amaterno, password, id, perfil) {
+            console.log(id)
+                    // Actualiza la fila con los nuevos datos.
+                    var fila = ("#" + id);
+            $("#nombre" + id).text(nombre + " " + apaterno + " " + amaterno);
+            $("#usuario" + id).text(usuarioS);
+            $("#password" + id).text(password);
             }
 
             function Eliminar(id) {
@@ -173,13 +190,13 @@
             if (confirmar) {
             $.get("/Interno/Eliminar", {
             "usuario": usuario
-            }, function(data) {
-            console.log(data);
+            }, function(datax) {
+            console.log(datax);
             if (data == "success") {
 
             $("#" + id).fadeOut(); // Oculta la fila con efecto fadeout
             } else   {
-            console.error(data);
+            console.error(datax);
             }
             });
             }

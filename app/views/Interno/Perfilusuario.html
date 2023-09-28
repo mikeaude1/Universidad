@@ -15,8 +15,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <div class="span5 offset2 bg-cyan  image-container elements" style='border-radius: 1em;'>
                 <div class="grid">
                     <div class="row">
-                        <p class="fn-bolder fg-white" style="margin-left: 8rem;font-family: serif; font-weight: bolder;">Bienvenido ${usua.Persona.Nombre} ${usua.Persona.ApellidoPaterno} ${usua.Persona.ApellidoMaterno} <br> tus opciones son las siguientes.</p>
-                        <image  style="font-family: serif; width: 70px; height: auto;margin-left: 15rem;"src='https://png.pngtree.com/png-vector/20190321/ourlarge/pngtree-vector-users-icon-png-image_856952.jpg'>
+                        <p class="fn-bolder fg-white" style="margin-left: 8rem;font-family: serif; font-weight: bolder;">Bienvenido ${usua.Persona.Nombre} ${usua.Persona.ApellidoPaterno} ${usua.Persona.ApellidoMaterno}<br> tus opciones son las siguientes.</p>
+                        <image style="font-family: serif; width: 70px; height: auto;margin-left: 15rem;"src='https://png.pngtree.com/png-vector/20190321/ourlarge/pngtree-vector-users-icon-png-image_856952.jpg'>
                         #{list acceso,as: 'a'}
 
                         <div class="bg-cyan fg-white text span6 "data-role="input-control"style="margin-left: 10rem;">
@@ -41,6 +41,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         %{String idusuario = session.get("idusuario");
                         }%
                         ${idusuario}
+                        <button class="button" id="createFlatWindow">Create Flat Window</button>
+                        
                     </div>
                 </div>
             </div>

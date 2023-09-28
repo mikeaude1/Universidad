@@ -113,7 +113,7 @@ public class Interno extends Controller {
         }
     }
 
-    public static void actualizardatos(String nombre, String apaterno, String amaterno, String usuarioS, String password, Long usuario) {
+    public static String actualizardatos(String nombre, String apaterno, String amaterno, String usuarioS, String password, Long usuario) {
         try {
             Usuarios usua = Usuarios.findById(usuario);
             usua.Persona.Activo = true;
@@ -125,8 +125,9 @@ public class Interno extends Controller {
             usua.Nombreusuario = usuarioS;
             usua.Contraseña = password;
             usua.save();
+            return "success";
         } catch (Exception e) {
-            renderJSON("Error:" + e.getMessage());
+            return "Error:" + e.getMessage();
         }
 
     }
@@ -138,6 +139,7 @@ public class Interno extends Controller {
         List<Accesos> acceso = Accesos.find("usuario.id=?", idusuarios).fetch();
         for (Accesos acc : acceso) {
             perfil.add(acc.perfil);
+
         }
         List<Menus> menu = new ArrayList<Menus>();
         for (Perfiles per : perfil) {
@@ -150,19 +152,35 @@ public class Interno extends Controller {
     public static void Listausuarios() {
         List<Usuarios> allusers = Usuarios.find("Activo=?", true).fetch();
         List<Accesos> accesos = Accesos.find("Activo=?", true).fetch();
-
         render(allusers, accesos);
     }
 
-    public static void activarDesactivarPerfil(Long usuario, Long perfil, int activo) {
-        System.out.println("activo = " + activo);
-        System.out.println("usuario = " + usuario);
-        System.out.println("perfil = " + perfil);
-        Perfiles perfile = Perfiles.findById(perfil);
+    public static String activarDesactivarPerfil(Long usuario, Long perfil, int activo) {
+        try {
 
-        boolean resultado = perfile.actdesactivar(usuario, perfil, activo);
+            System.out.println("activo = " + activo);
+            System.out.println("usuario = " + usuario);
+            System.out.println("perfil = " + perfil);
+            boolean resultado;
+            Perfiles pe = Perfiles.findById(perfil);
+            Usuarios usa = Usuarios.findById(usuario);
+            Accesos acceso = Accesos.find("usuario.id=? AND perfil.id=?", usuario, perfil).first();
+            if (acceso == null) {
+                Accesos acces = new Accesos();
+                acces.perfil = pe;
+                acces.usuario = usa;
+                acces.activo = false;
+                acces.save();
+                resultado = acces.actdesactivar(acces, activo);
+            } else {
+                resultado = acceso.actdesactivar(acceso, activo);
+            }
+            System.out.println("todo bien");
+            return "success";
 
-        renderText("Perfil activado/desactivado con éxito." + resultado);
+        } catch (Exception e) {
+            return "error" + e;
+        }
 
     }
 }

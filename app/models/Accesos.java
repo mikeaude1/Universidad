@@ -15,4 +15,19 @@ public class Accesos extends Model {
     public Usuarios usuario;
     @OneToOne
     public Perfiles perfil;
+
+    public static Boolean actdesactivar(Accesos acces, int activo) {
+        Accesos acceso = Accesos.findById(acces.id);
+
+        if (activo == 1) {
+
+            acceso.activo = false;
+            acceso.save();
+            return true;
+        } else {
+            acceso.activo = true;
+            acceso.save();
+            return true;
+        }
+    }
 }
