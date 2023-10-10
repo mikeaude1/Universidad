@@ -41,7 +41,7 @@ public class Interno extends Controller {
         }
     }
 
-    public static void Administrador(String usuario, String nombre, String apaterno, String amaterno, int nivel, String password) {
+    public static void Administrador(String usuario, String nombre, String apaterno, String amaterno, int nivel,Perfiles perfil, String password) {
         Personas perso = Personas.find("Nombre=? AND ApellidoPaterno=? AND ApellidoMaterno=?", nombre, apaterno, amaterno).first();
         if (perso == null) {
             Personas person = new Personas();
@@ -70,10 +70,10 @@ public class Interno extends Controller {
             nuevousua.Nombreusuario = usuario;
             nuevousua.Persona = perso;
             nuevousua.save();
-            Perfiles perfile = Perfiles.find("Niveldeacceso=?", nivel).first();
+            Perfiles perfile = Perfiles.find("Nombreperfil=?", perfil.Nombreperfil).first();
 
             Accesos acceso = new Accesos();
-            acceso.perfil.id = perfile.id;
+            acceso.perfil = perfile;
             acceso.usuario = nuevousua;
             acceso.activo = true;
             acceso.save();

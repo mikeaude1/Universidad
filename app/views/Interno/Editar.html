@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
- 
-   
-        <style>
-            .right-button {
-                float: right; /* Coloca los botones a la derecha */
-                margin-left: 10px; /* Añade espacio entre el texto y el botón */
-            }
-        </style>
-    </head>
-    <body class="metro">
+       
+
+        
+       
+  <script> 
+      $(document).ready(function(){
+           $.Metro.initInputs();
+      });
+    </script>
         <div class='grid'>
             <div class='row'>
                 <div class='span12'>
-
                     <label>Nombre</label>
                     <div class="input-control text"><input id="nombre" type="text" name="nombre" value="${usua.Persona.Nombre}"></div>
                     <label>Apaterno</label>
@@ -92,5 +83,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         });
         }
     </script>
-</body>
-</html>
+

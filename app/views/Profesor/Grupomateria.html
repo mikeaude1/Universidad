@@ -1,0 +1,27 @@
+
+<div class="input-control select">
+    <select id= 'hdocente'  onchange='Fecha()'>
+        <option value='0'>Seleccione el grupo</option>
+        #{list Hd, as: 'h'}
+        <option value= '${h.id}'>Grupo: ${h.grupo.Nombre} Materia: ${h.materia.Nombre} </option>
+        #{/list}
+    </select>
+</div>
+<div class='span6' id='fecha'>
+
+</div>
+
+
+
+<script>
+    function Fecha() {
+        var hdocente = $('#hdocente').val();
+        $.get("/Profesor/Fecha", {
+            "hdocente": hdocente,
+        }
+        , function (respuesta) {
+            $("#fecha").html(respuesta);
+        });
+    }
+
+</script>

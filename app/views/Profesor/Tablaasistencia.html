@@ -1,0 +1,102 @@
+
+<div class="grid-fluid">
+    <div class="row">
+        <div class="span12">
+            <div class="span12 dataTables_scroll">
+                <div class="dataTables_scrollHead" style="overflow:hidden; position:relative; border: 0px; width:100%;">
+                    <div class="dataTables_scrollHeadInner" style="box-sizing: content-box; width:843.729px; padding-right: 16px;">
+                        <table id="example" class="display nowrap" style="width:100%">
+                            <thead>
+
+                                <tr>
+                                    <th  class="text-left sorting sorting_desc" tabindex="0" rowspan='1' colspan="1"style="border:1px solid black;" >
+                                        Nombre
+                                    </th>
+
+                                    <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
+                                        Asistencia
+                                    </th>
+                                    <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
+                                        Retardo
+                                    </th>
+                                    <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
+                                        Falta
+                                    </th>
+                                    <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
+                                        Justificante
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                #{list Hm, as: 'hm'}
+                                <tr>
+
+                                    <td id="Nombre" class="right " style="border:1px solid black;">
+                                        ${hm.Historialalumno.alumno.Persona.Nombre} ${hm.Historialalumno.alumno.Persona.ApellidoPaterno} ${hm.Historialalumno.alumno.Persona.ApellidoMaterno}
+                                    </td>
+                                    #{list ta, as: 't'}
+                                    <td  class="right " style="border:1px solid black;">
+                                        <div class="input-control radio" data-role="input-control">
+                                            <label>
+                                                <input id="Tipo${hm.id}${t.id}" type="radio" name="tipo${hm.id}" value="${t.id}" onchange="Guardar(${hm.id}, ${t.id})">
+                                                <span class="check" ></span>
+                                                ${t.Tipo}
+                                            </label>
+                                        </div>
+                                    </td>
+                                    #{/list}
+
+                                    <td  class="right " style="border:1px solid black;">
+                                        <div class="input-control checkbox">
+                                            <label>
+                                                <input id="Justif${hm.id}" type="checkbox" id="justificado" name="justificacion"  onchange="Guardar(${hm.id}, ${t.id})">
+                                                <span class="check"></span>
+                                                Justificar
+                                            </label>
+                                        </div>
+                                </tr>
+                                #{/list}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="guardar"></div>
+<script> $(document).ready(function () {
+    new DataTable('#example', {
+    scrollX: true,
+            scrollY: 200
+    });
+    });</script>
+<script>
+    function Guardar(Hm, tipo) {
+
+    console.log(Hm);
+    console.log(tipo);
+    console.log("${fecha}");
+    console.log("${Hd.id}");
+    var just = $("#Justif" + Hm).prop("checked");
+    console.log(just);
+    if (just) {
+    just = true;
+    } else {
+    just = false;
+    }
+
+    $.get("/Profesor/Asistenciaguardada", {
+    "just": just,
+            "fecha": "${fecha}",
+            "tipo": tipo,
+            "hdocente":"${Hd.id}",
+            "Hm": Hm
+    }, function (data) {
+    // Manejar la respuesta si es necesario
+    });
+    }
+</script>

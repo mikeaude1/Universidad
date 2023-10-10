@@ -1,13 +1,5 @@
 #{extends 'Menuintro.html' /}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    </head>
-    <body class="metro">
         <div class="grid-fluid">
             <div class="row">
                 <div class="span12">
@@ -111,19 +103,21 @@
                     caption: "Cancelar",
                             cls: "js-dialog-close",
                             onclick: function () {
+                             
                             // Acciones al hacer clic en Cancelar
                             }
                     }
                     ],
                     onShow: function(_dialog) {
-                    var content = data + '<button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> '
+                    var content = data 
                             $.Dialog.title("User login");
                     $.Dialog.content(content);
-                    $.Dialog.title("Editarusuario");
+                    $.Dialog.title("Editar usuario");
                     $.Metro.initInputs();
                     }, 
                     onClose:function (_dialog) {
                         $.Dialog.close()
+                        
                     }
                     
             });
@@ -202,5 +196,4 @@
             }
             }
         </script>
-    </body>
-</html>
+

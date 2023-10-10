@@ -1,0 +1,34 @@
+
+<div class="input-control text" id="datepicker">
+    <input type="text" value=''  id='fecha1'>
+    <button class="btn-date" ></button>
+</div>
+<div class='span12' id='resp'>
+    <button id="aceptar" onclick='Tablaasistencias()'>Aceptar</button>
+</div>
+<script>
+
+    $("#datepicker").datepicker({
+
+        format: "dd/mm/yyyy", // set output format
+        effect: "none", // none, slide, fade
+        position: "bottom", // top or bottom,
+
+
+    });
+</script>
+
+<script>
+    function Tablaasistencias() {
+        var fecha = $("#fecha1").val();
+        $.get("/Profesor/Tablaasistencia", {
+            "fecha": fecha,
+            "hdocente": '${hdocente}'
+        }, function (respuesta) {
+            $("#resp").html(respuesta);
+            $("#aceptar").hide();
+        });
+
+    }
+
+</script>
