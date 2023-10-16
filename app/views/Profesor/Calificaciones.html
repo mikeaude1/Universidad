@@ -26,6 +26,7 @@
                             var periodo = $("#periodo").val();
                             $.get("/Profesor/Obtenermateria", {
                                 "periodo": periodo
+
                             }, function (respuesta) {
                                 $("#respuesta").html(respuesta);
                             });

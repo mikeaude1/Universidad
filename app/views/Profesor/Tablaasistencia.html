@@ -38,23 +38,26 @@
                                     <td  class="right " style="border:1px solid black;">
                                         <div class="input-control radio" data-role="input-control">
                                             <label>
-                                                <input id="Tipo${hm.id}${t.id}" type="radio" name="tipo${hm.id}" value="${t.id}" onchange="Guardar(${hm.id}, ${t.id})">
-                                                <span class="check" ></span>
+
+                                                <input id="Tipo${hm.id}${t.id}" type="radio" name="tipo${hm.id}" value="${t.id}"  #{if t.obtenertipo(Hd.id, hm.id, fecha)}checked #{/if} onchange="Guardar(${hm.id}, ${t.id})">
+                                                       <span class="check" ></span>
                                                 ${t.Tipo}
+
                                             </label>
                                         </div>
                                     </td>
                                     #{/list}
 
                                     <td  class="right " style="border:1px solid black;">
-                                        <div class="input-control checkbox">
-                                            <label>
-                                                <input id="Justif${hm.id}" type="checkbox" id="justificado" name="justificacion"  onchange="Guardar(${hm.id}, ${t.id})">
-                                                <span class="check"></span>
+                                        <div class="input-control checkbox" id='esconder${hm.id}' #{if  !hm.obtenertipofalta(fecha)}style="display:none;" #{/if}>
+                                             <label>
+                                                <input id="Justif${hm.id}"  type="checkbox" id="justificado" name="justificacion" #{if hm.obtenerjustificacion(Hd.id, fecha)}checked #{/if}  onchange="Guardar(${hm.id}, ${t.id})">
+                                                       <span class="check"></span>
                                                 Justificar
                                             </label>
                                         </div>
                                 </tr>
+
                                 #{/list}
                             </tbody>
                         </table>
@@ -69,34 +72,43 @@
 
 <div id="guardar"></div>
 <script> $(document).ready(function () {
-    new DataTable('#example', {
-    scrollX: true,
+
+        new DataTable('#example', {
+            scrollX: true,
             scrollY: 200
-    });
+        });
     });</script>
 <script>
     function Guardar(Hm, tipo) {
 
-    console.log(Hm);
-    console.log(tipo);
-    console.log("${fecha}");
-    console.log("${Hd.id}");
-    var just = $("#Justif" + Hm).prop("checked");
-    console.log(just);
-    if (just) {
-    just = true;
-    } else {
-    just = false;
-    }
+        console.log(Hm);
+        console.log(tipo);
+        console.log("${fecha.format('dd/MM/yyyy')}");
+        console.log("${Hd.id}");
+        var falta = tipo;
+        if (falta == 3) {
+            $("#esconder" + Hm).show();
+            console.log(tipo);
+        } else {
+            $("#esconder" + Hm).hide();
+        }
+        var just = $("#Justif" + Hm).prop("checked");
+        console.log(just);
+        if (just) {
+            just = true;
+            tipo = 1;
+        } else {
+            just = false;
+        }
 
-    $.get("/Profesor/Asistenciaguardada", {
-    "just": just,
-            "fecha": "${fecha}",
+        $.get("/Profesor/Asistenciaguardada", {
+            "just": just,
+            "fecha": "${fecha.format('dd/MM/yyyy')}",
             "tipo": tipo,
-            "hdocente":"${Hd.id}",
+            "hdocente": "${Hd.id}",
             "Hm": Hm
-    }, function (data) {
-    // Manejar la respuesta si es necesario
-    });
+        }, function (data) {
+            notify(data);
+        });
     }
 </script>

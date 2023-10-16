@@ -41,13 +41,17 @@ public class Profesor extends Controller {
     }
 
     public static void Calificaciones() {
+       
         List<Periodo> periodos = Periodo.findAll();
         render(periodos);
     }
 
     public static void Obtenermateria(long periodo) {
+         String idusuario = session.get("idusuario");
+        long idusuarios = Long.parseLong(idusuario);
+        Usuarios usuario = Usuarios.findById(idusuarios);
         List<Historialdocente> hdocente = new ArrayList<Historialdocente>();
-        List<Historialdocente> historiald = Historialdocente.find("grupo.periodo.id=?", periodo).fetch();
+        List<Historialdocente> historiald = Historialdocente.find("persona=? AND grupo.periodo.id=?", usuario.Persona,periodo).fetch();
         for (Historialdocente hd : historiald) {
             if (hd.tienehm()) {
                 hdocente.add(hd);
@@ -167,6 +171,6 @@ public class Profesor extends Controller {
 
         }
 
-        return("se Guardo con exito");
+        return("Se guardo con exito");
     }
 }

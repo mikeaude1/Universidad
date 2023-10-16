@@ -75,7 +75,14 @@
             }
 
 
-
+            function notify(data) {
+                $.Notify({
+                    shadow: true,
+                    position: 'bottom-left',
+                    content: data,
+                    style: {background: 'black', color: 'white', width: 'bolder'}
+                });
+            }
 
 
 

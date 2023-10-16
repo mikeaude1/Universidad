@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.*;
 import play.db.jpa.Model;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Entity
 public class Historialmateria extends Model {
@@ -49,5 +50,23 @@ public class Historialmateria extends Model {
 
         return count > 0 ? total / 5 : 0.0;
     }
-
+ public boolean obtenertipofalta(Date fecha) {
+     
+        try {
+             Asistencias tipo =Asistencias.find("Historialmateria=? AND Fecha=?", this, fecha).first();
+            return tipo.Tipodeasistencia.id==3l;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+ 
+  public boolean obtenerjustificacion(long hd,Date fecha) {
+        try {
+            Asistencias justi = Asistencias.find("Historialdocente=? AND Historialmateria=? AND Fecha=?", hd, this, fecha).first();
+            
+            return justi.Justificacion==true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

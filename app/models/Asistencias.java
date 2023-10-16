@@ -12,7 +12,7 @@ import java.util.*;
 public class Asistencias extends Model {
 
     public Boolean Activo;
-    
+
     @OneToOne
     public Historialmateria Historialmateria;
     @OneToOne
@@ -21,5 +21,7 @@ public class Asistencias extends Model {
     public Tipodeasistencia Tipodeasistencia;
     public Date Fecha;
     public Boolean Justificacion;
+
+  
 
 }
