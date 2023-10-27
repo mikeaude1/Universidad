@@ -1,36 +1,26 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <div class="span6 input-control select">
-        <label for="periodo">Periodo</label>
-        <select  id="periodo"   name='periodo' onchange='gruporeinscripcion()'>
-            <option value="0">Selecciona el periodo</option>
-            #{list periodo, as: 'pe'}
-            <option value="${pe.id}">${pe.Nombre}</option>
-            #{/list}
-        </select>
-        <div class=" input-control select" id="selectgrupo">
-        </div>
+<div class="span6 input-control select">
+    <label for="periodo">Periodo</label>
+    <select  id="periodo"   name='periodo' onchange='gruporeinscripcion()'>
+        <option value="0">Selecciona el periodo</option>
+        #{list periodo, as: 'pe'}
+        <option value="${pe.id}">${pe.Nombre}</option>
+        #{/list}
+    </select>
+    <div class=" input-control select" id="selectgrupo">
     </div>
+</div>
 
-    <script>
-        function gruporeinscripcion() {
-            var periodo = $("#periodo").val();
-            $.get("/Escolares/gruporeinscripcion", {
-                "periodo": periodo,
-                "p": "${p}",
-                "idcarrera": "${idcarrera}"
-            }, function (respuesta) {
-                $("#selectgrupo").html(respuesta);
-            });
-        }
-    </script>
-</html>
+<script>
+    function gruporeinscripcion() {
+        var periodo = $("#periodo").val();
+        $.get("/Escolares/gruporeinscripcion", {
+            "periodo": periodo,
+            "p": "${p}",
+            "idcarrera": "${idcarrera}"
+        }, function (respuesta) {
+            $("#selectgrupo").html(respuesta);
+        });
+    }
+</script>
+

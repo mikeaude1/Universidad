@@ -1,86 +1,87 @@
-       
 
-        
-       
-  <script> 
-      $(document).ready(function(){
-           $.Metro.initInputs();
-      });
-    </script>
-        <div class='grid'>
-            <div class='row'>
-                <div class='span12'>
-                    <label>Nombre</label>
-                    <div class="input-control text"><input id="nombre" type="text" name="nombre" value="${usua.Persona.Nombre}"></div>
-                    <label>Apaterno</label>
-                    <div class="input-control text"><input id="apaterno" type="text" name="apaterno" value="${usua.Persona.ApellidoPaterno}"></div>
-                    <label>Amaterno</label>
-                    <div class="input-control text"><input id="amaterno" type="text" name="amaterno"value="${usua.Persona.ApellidoMaterno}"></div>
-                    <label>Usuario</label>
-                    <div class="input-control text"><input id="usuario" type="text" name="usuario" value="${usua.Nombreusuario}"></div>
-                    <label>Password</label>
-                    <div class="input-control password"><input id="password" type="password" name="password" value="${usua.Contraseña}"></div>
-                    <div class="panel">
-                        <div class="panel-header bg-lightBlue fg-white">
-                            Perfiles
-                        </div>
-                        <div class="panel-content">
-                            <div class="grid fluid">
-                                <div class="row">
-                                    <div class="span5">Perfiles Activos
 
-                                        <ul>
-                                            #{list allperfiles, as: 'perfil'}
-                                            #{if perfil.Traerperfil(usua.id)}
-                                            <li >${perfil.Nombreperfil} <button class="right-button"  onclick="activarDesactivar(${usua.id}, ${perfil.id}, 1)"><i class="icon-arrow-right-4">Desactivar perfil</i></button></li>
-                                            <br>
-                                            <br>
-                                            #{/if}
-                                            #{/list}
-                                        </ul>
-                                    </div>
 
-                                    <div class="span5">Perfiles Inactivos
-                                        <ul>
-                                            #{list allperfiles, as: 'perfil'}
-                                            #{if !perfil.Traerperfil(usua.id)}
-                                            <li>${perfil.Nombreperfil} <button class="right-button"  onclick="activarDesactivar(${usua.id}, ${perfil.id}, 2);"><i class="icon-arrow-left-4">Activar perfil</i></button></li>
-                                            <br><!-- comment -->
-                                            <br>
-                                            #{/if}
-                                            #{/list}
-                                        </ul>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button class="button primary" onclick="GuardarCambios(${usua.id})">Guardar Cambios</button>&nbsp;
-                        <button class="button btn-close" type="button" onclick="$.Dialog.close()">Cancelar</button>
-                    </div>
-
+<script>
+    $(document).ready(function(){
+    $.Metro.initInputs();
+    });
+</script>
+<div class='grid'>
+    <div class='row'>
+        <div class='span12'>
+            <label>Nombre</label>
+            <div class="input-control text"><input id="nombre" type="text" name="nombre" value="${usua.Persona.Nombre}"></div>
+            <input type="text" data-transform="input-control" value="${usua.Persona.Nombre}" />
+            <label>Apaterno</label>
+            <div class="input-control text"><input id="apaterno" type="text" name="apaterno" value="${usua.Persona.ApellidoPaterno}"></div>
+            <label>Amaterno</label>
+            <div class="input-control text"><input id="amaterno" type="text" name="amaterno"value="${usua.Persona.ApellidoMaterno}"></div>
+            <label>Usuario</label>
+            <div class="input-control text"><input id="usuario" type="text" name="usuario" value="${usua.Nombreusuario}"></div>
+            <label>Password</label>
+            <div class="input-control password"><input id="password" type="password" name="password" value="${usua.Contraseña}"></div>
+            <div class="panel">
+                <div class="panel-header bg-lightBlue fg-white">
+                    Perfiles
                 </div>
+                <div class="panel-content">
+                    <div class="grid fluid">
+                        <div class="row">
+                            <div class="span5">Perfiles Activos
 
+                                <ul>
+                                    #{list allperfiles, as: 'perfil'}
+                                    #{if perfil.Traerperfil(usua.id)}
+                                    <li >${perfil.Nombreperfil} <button class="right-button"  onclick="activarDesactivar(${usua.id}, ${perfil.id}, 1)"><i class="icon-arrow-right-4">Desactivar perfil</i></button></li>
+                                    <br>
+                                    <br>
+                                    #{/if}
+                                    #{/list}
+                                </ul>
+                            </div>
+
+                            <div class="span5">Perfiles Inactivos
+                                <ul>
+                                    #{list allperfiles, as: 'perfil'}
+                                    #{if !perfil.Traerperfil(usua.id)}
+                                    <li>${perfil.Nombreperfil} <button class="right-button"  onclick="activarDesactivar(${usua.id}, ${perfil.id}, 2);"><i class="icon-arrow-left-4">Activar perfil</i></button></li>
+                                    <br><!-- comment -->
+                                    <br>
+                                    #{/if}
+                                    #{/list}
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="form-actions">
+                <button class="button primary" onclick="GuardarCambios(${usua.id})">Guardar Cambios</button>&nbsp;
+                <button class="button btn-close" type="button" onclick="$.Dialog.close()">Cancelar</button>
+            </div>
+
         </div>
+
     </div>
-    <script>function activarDesactivar(usuario, perfil, activo) {
-        $.post("/Interno/activarDesactivarPerfil", {
-        "usuario":usuario,
-                "perfil":perfil,
-                "activo":activo
-        }, function(data1) {
-        if (data1 == "success") {
-        // La función se ejecutó con éxito
-        alert("Perfil activado/desactivado con éxito.");
-        } else {
-        // Hubo un error
-        alert("Error al activar/desactivar el perfil." + data);
-        }
-        });
-        }
-    </script>
+</div>
+</div>
+<script>function activarDesactivar(usuario, perfil, activo) {
+    $.post("/Interno/activarDesactivarPerfil", {
+    "usuario":usuario,
+            "perfil":perfil,
+            "activo":activo
+    }, function(data1) {
+    if (data1 == "success") {
+    // La función se ejecutó con éxito
+    alert("Perfil activado/desactivado con éxito.");
+    } else {
+    // Hubo un error
+    alert("Error al activar/desactivar el perfil." + data);
+    }
+    });
+    }
+</script>
 

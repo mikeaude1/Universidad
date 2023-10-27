@@ -1,0 +1,58 @@
+#{extends 'Menuintro.html' /}
+<div class="panel">
+    <div class="panel-header bg-lightBlue fg-white">
+        Asistencias
+    </div>
+    <div class="panel-content">
+        <div class="accordion" data-role="accordion">
+            #{list hm,as: 'hm'}
+            <div class="accordion-frame">
+
+                <a href="#" class="heading">${hm.Materia.Nombre}</a>
+
+                <div class="content">
+
+                    <table  class="display nowrap tablota" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo de asistencia</th>
+                                <th>Total de asistencias</th>
+                                <th>Total de retardos</th>
+                                <th>Total de faltas</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            #{list hm.obtenerasistencias(),as: 'a'}
+                            <tr>
+                                <td>${a.Fecha}</td>
+                                <td>${a.Tipodeasistencia.Tipo}</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            #{/list}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>${hm.Cantidadasistencias(1)}</td>
+                                <td>${hm.Cantidadasistencias(2)}</td>
+                                <td>${hm.Cantidadasistencias(3)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            #{/list}
+        </div>
+    </div>
+
+</div>
+<script>
+    new DataTable('.tablota', {
+        scrollX: true,
+        scrollY: 200
+    });
+</Script>

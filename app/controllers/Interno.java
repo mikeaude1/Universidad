@@ -18,30 +18,33 @@ public class Interno extends Controller {
         String idusuario = session.get("idusuario");
         long idusuarios = Long.parseLong(idusuario);
         Usuarios usua = Usuarios.findById(idusuarios);
-        List<Accesos> acceso = Accesos.find("usuario.id=?", usua.id).fetch();
+        List<Accesos> acceso = Accesos.find("usuario.id=?  AND Activo=? order By perfil", usua.id,1).fetch();
         render(acceso, usua);
     }
 
     @Before
     static void checkAuth() {
-
-        String idusuario = session.get("idusuario");
-        long idusuarios = Long.parseLong(idusuario);
-        Usuarios usuario = Usuarios.findById(idusuarios);
         try {
-            Accesos acceso = Accesos.find("usuario.id=?", usuario.id).first();
+            String idusuario = session.get("idusuario");
+            long idusuarios = Long.parseLong(idusuario);
+            Usuarios usuario = Usuarios.findById(idusuarios);
 
-            if (acceso == null) {
-                flash.error("Debes iniciar sesión para acceder a esta página.");
+        
+                Accesos acceso = Accesos.find("usuario.id=? AND perfil.Nivelacceso=? AND activo=?", usuario.id, 4,true).first();
+
+                if (acceso == null) {
+                    flash.error("Debes iniciar sesión para acceder a esta página.");
+                    redirect("/Externo/Login");
+                }
+            } catch (Exception e) {
+                flash.error("Ocurrió un error al verificar la autenticación.");
                 redirect("/Externo/Login");
             }
-        } catch (Exception e) {
-            flash.error("Ocurrió un error al verificar la autenticación.");
-            redirect("/Externo/Login");
+       
         }
-    }
+    
 
-    public static void Administrador(String usuario, String nombre, String apaterno, String amaterno, int nivel,Perfiles perfil, String password) {
+    public static void Administrador(String usuario, String nombre, String apaterno, String amaterno, int nivel, Perfiles perfil, String password) {
         Personas perso = Personas.find("Nombre=? AND ApellidoPaterno=? AND ApellidoMaterno=?", nombre, apaterno, amaterno).first();
         if (perso == null) {
             Personas person = new Personas();
@@ -135,18 +138,20 @@ public class Interno extends Controller {
     public static void Sidebar() {
         String idusuario = session.get("idusuario");
         long idusuarios = Long.parseLong(idusuario);
-        List<Perfiles> perfil = new ArrayList<Perfiles>();
-        List<Accesos> acceso = Accesos.find("usuario.id=?", idusuarios).fetch();
+        List<Perfiles> perfiles = new ArrayList<Perfiles>();
+        List<Accesos> acceso = Accesos.find("usuario.id=? AND Activo=?", idusuarios,true).fetch();
         for (Accesos acc : acceso) {
-            perfil.add(acc.perfil);
+            perfiles.add(acc.perfil);
 
         }
+        
         List<Menus> menu = new ArrayList<Menus>();
-        for (Perfiles per : perfil) {
-            List<Menus> menusPerfil = Menus.find("Perfil.id=?", per.id).fetch();
+        for (Perfiles per : perfiles) {
+            List<Menus> menusPerfil = Menus.find("Perfil.id=? AND Activo=?", per.id,true).fetch();
             menu.addAll(menusPerfil);
         }
-        render(menu);
+        
+        render(menu,perfiles);
     }
 
     public static void Listausuarios() {
@@ -164,7 +169,7 @@ public class Interno extends Controller {
             boolean resultado;
             Perfiles pe = Perfiles.findById(perfil);
             Usuarios usa = Usuarios.findById(usuario);
-            Accesos acceso = Accesos.find("usuario.id=? AND perfil.id=?", usuario, perfil).first();
+            Accesos acceso = Accesos.find("usuario.id=? AND perfil.id=? AND Activo=?", usuario, perfil,true).first();
             if (acceso == null) {
                 Accesos acces = new Accesos();
                 acces.perfil = pe;

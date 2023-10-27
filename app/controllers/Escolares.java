@@ -1,22 +1,25 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-
+import play.db.jpa.JPABase;
+import javax.persistence.Query;
+import play.mvc.Controller;
+import models.Alumnos;
+import play.mvc.With;
 import java.util.*;
-
 import models.*;
-
+import models.Periodo;
+import static play.db.jpa.GenericModel.findAll;
+import play.mvc.Before;
 public class Escolares extends Controller {
 
     @Before
     static void checkAuth() {
-
+  try {
         String idusuario = session.get("idusuario");
         long idusuarios = Long.parseLong(idusuario);
         Usuarios usuario = Usuarios.findById(idusuarios);
-        try {
-            Accesos acceso = Accesos.find("usuario.id=? AND perfil.Nivelacceso=?", usuario.id, 1).first();
+      
+            Accesos acceso = Accesos.find("usuario.id=? AND perfil.Nivelacceso=? AND activo=?", usuario.id, 1,true).first();
 
             if (acceso == null) {
                 flash.error("Debes iniciar sesión para acceder a esta página.");
@@ -31,6 +34,18 @@ public class Escolares extends Controller {
     public static void Registroaspirantes() {
         List<Carreras> carrera = Carreras.findAll();
         render(carrera);
+    }
+
+    public static void Asistencias() {
+        String idusuario = session.get("idusuario");
+        long idusuarios = Long.parseLong(idusuario);
+        Usuarios usuario = Usuarios.findById(idusuarios);
+
+        List<Historialmateria> hm = Historialmateria.find("Historialalumno.alumno.Persona=?", usuario.Persona).fetch();
+       
+      
+
+        render(hm);
     }
 
     public static void Guardaraspirantes(String Nombre, String Apaterno, String Amaterno, String folio, Long carrera) {
@@ -84,7 +99,7 @@ public class Escolares extends Controller {
         render(grupo, periodo, p);
     }
 
-    public static void Generarreinscripcion(Long grupo, Long p, Long periodo) {
+    public static void Generarreinscripcion(Long grupo, long p, Long periodo) {
         System.out.println(p);
         Grupos group = Grupos.findById(grupo);
         Periodo perio = Periodo.findById(periodo);
@@ -142,7 +157,16 @@ public class Escolares extends Controller {
         List<Historialalumnos> halumnos = Historialalumnos.find("alumno.id=? AND activo = true", p).fetch();
         //List<Calificaciones> calificacion = Calificaciones.find("Historialmateria.Historialalumno.id=?", alumnos.id).fetch();
         // System.out.println(calificacion + "sisoy");
-        render(persona, alumnos, Materia, carrera, halumnos, p);
+        
+        
+         String idusuario = session.get("idusuario");
+        long idusuarios = Long.parseLong(idusuario);
+        Usuarios usuario = Usuarios.findById(idusuarios);
+
+        List<Historialmateria> hmig = Historialmateria.find("Historialalumno.alumno.Persona=?", usuario.Persona).fetch();
+       
+     
+        render(persona, alumnos, Materia, carrera, halumnos, p, hmig);
     }
 
     public static void borrarhalumno(Long halum) {
@@ -159,7 +183,7 @@ public class Escolares extends Controller {
     }
 
     public static void Tablabusqueda(String matricula, String nombre, String apaterno, String amaterno) {
-        List< Alumnos> persona;
+        List< Alumnado> persona;
 
         if (matricula.equals("")) {
 

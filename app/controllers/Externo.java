@@ -21,7 +21,7 @@ public class Externo extends Controller {
     }
 
     public static void Principal(String usuario, String password) {
-        Usuarios usua = Usuarios.find("Nombreusuario=? AND Contraseña=? AND Activo=?", usuario, password, true).first();
+        Usuarios usua = Usuarios.find("Nombreusuario=? AND Contraseña=? AND activo=?", usuario, password, true).first();
         System.out.println(usua);
         if (usua != null) {
             usua.setContraseña(password);

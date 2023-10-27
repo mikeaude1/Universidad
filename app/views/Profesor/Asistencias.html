@@ -1,7 +1,7 @@
 #{extends 'Menuintro.html' /}
 
 <div class="panel" data-role="panel">
-    <div class="panel-header bg-cobalt fg-white">
+    <div class="panel-header bg-cyan fg-white">
         Asistencias
     </div>
     <div class="panel-content">
@@ -14,12 +14,11 @@
                 #{/list}
             </select>
         </div>
+        <div class="span6 input-control select "id="respuesta">
+        </div>
     </div>
 </div>
-<div class="row">
-    <div class="span6 input-control select "id="respuesta">
-    </div>
-</div>
+
 <script>
     function Grupomateria() {
         var periodos = $("#periodo").val();

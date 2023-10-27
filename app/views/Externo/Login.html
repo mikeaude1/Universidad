@@ -1,37 +1,36 @@
 #{extends 'Menuexterno.html' /}
 
-<div class='grid-fluid '>
-    <div class=row>
-        <div class='span4 offset3 bg-cyan image-container form elements' style="justify-content: center; border-radius: 6px;">
-            <div class='span6  'style='padding-bottom: 2rem'>
-                <div class='grid-fluid '>
-                    <div class="row">
-                        <form action="/Externo/Principal" method="POST">
-                            <div class="bg-cyan text fg-white span6 "data-role="input-control"style="margin-left: 6rem;font-family: serif;">
-                                <h2 class="fg-white"style="margin-left: 3%;font-family: serif; font-weight: bolder;">Iniciar Sesion</h2>
-                                <image  style=" width: 70px; height: auto;margin-left: 13% "src='https://www.insak.com.co/aym_image/aym_ico/aym_ico_user.png'>
-                                <label for='usuario'" >Nombre de Usuario</label>
-                                <input id='usuario' type='text' autofocus style='padding: .5rem;' name='usuario'>
-                            </div>
-                            <div class="bg-cyan fg-white password span6 " data-role="input-control" style="margin-left: 6rem;font-family: serif;">
-                                <label for='password'>Contraseña</label>
-                                <input id='password' type="password" autofocus style='padding: .5rem; ' name='password' >
-                            </div>
-                            <div class=row>
+<form action="/Externo/Principal" method="POST">
+    <div class="panel">
+        <div class="panel-header bg-lightBlue fg-white">
+            <div class="text fg-white span12 " data-role="input-control" style="justify-items:center; font-family: serif; margin-left: 40%">
 
-                                <div class='span12'style="  margin: 1rem; margin-left: 5rem;padding: 1rem; width:3.5%">
-                                    <button class="bg-darkCyan fg-white fn-bolder btn-reveal" style='font-family: serif;font-weight: bolder;border-radius: 10em; width:20%'>INGRESAR</button>
-                                </div>
-                                #{if mensaje}
-                                <div class='span12 '>
-                                    <p class='fg-red' style="font-weight: bolder;font-family: serif;margin-left: 5rem;">${mensaje}</p>
-                                    #{/if}
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                <image  style="margin-left:3.5rem; width: 70px" src='https://www.insak.com.co/aym_image/aym_ico/aym_ico_user.png'>
+                <br>
+                <label>Iniciar Sesion</label>
             </div>
         </div>
+        <div class="panel-content bg-white">
+
+            <div class="input-control text" data-role="input-control" style=" font-family: serif;">
+                <label for='usuario' >Nombre de Usuario</label>
+                <input id='usuario' type='text' placeholder="type text" autofocus  name='usuario'>
+            </div>
+            <br><br>
+            <div class=" input-control password  " data-role="input-control" style="font-family: serif;">
+                <label for='password'>Contraseña</label>
+                <input id='password' type="password" placeholder="type password" autofocus  name='password' >
+                <button class="btn-reveal" tabindex="-1" type="button"></button>
+            </div>
+            <div style="  margin: 1rem; margin-left: 40%;padding: 1rem; width:50%">
+                <button class="bg-darkCyan fg-white fn-bolder btn-reveal primary" >INGRESAR</button>
+            </div>
+
+            #{if mensaje}
+            <p class='fg-red' style="font-weight: bolder;font-family: serif;margin-left: 5rem;">${mensaje}</p>
+            #{/if}
+        </div>
     </div>
+</form>
+
 

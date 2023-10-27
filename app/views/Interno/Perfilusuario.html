@@ -1,37 +1,45 @@
 #{extends 'Menuintro.html' /}
-
-        <div class="row">
-            <div class="span5 offset2 bg-cyan  image-container elements" style='border-radius: 1em;'>
-                <div class="grid">
-                    <div class="row">
-                        <p class="fn-bolder fg-white" style="margin-left: 8rem;font-family: serif; font-weight: bolder;">Bienvenido ${usua.Persona.Nombre} ${usua.Persona.ApellidoPaterno} ${usua.Persona.ApellidoMaterno}<br> tus opciones son las siguientes.</p>
-                        <image style="font-family: serif; width: 70px; height: auto;margin-left: 15rem;"src='https://png.pngtree.com/png-vector/20190321/ourlarge/pngtree-vector-users-icon-png-image_856952.jpg'>
-                        #{list acceso,as: 'a'}
-
-                        <div class="bg-cyan fg-white text span6 "data-role="input-control"style="margin-left: 10rem;">
-
-                            <label for='${usua.id}+${a.id}' >Ingresar como ${a.perfil.Nombreperfil}</label>
-                        </div>
-                        <div class='span12 'style=" margin-left: 35%; margin-top:1rem; width:44.5%; ">
-                            #{if a.perfil.id == 1}
-                            <a href="../Escolares/Buscaralumno" type="button" class="bg-darkCyan fg-white fn-bolder btn-reveal"  style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;padding-left:1rem;padding-right:1rem;'>${a.perfil.Nombreperfil}</a>
-                            #{/if}
-                            #{if a.perfil.id == 2}
-                            <a href="../Profesor/Calificaciones" type="button" class="bg-darkCyan fg-white fn-bolder btn-reveal"  style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;padding-left:1rem;padding-right:1rem;'>${a.perfil.Nombreperfil}</a>
-                            #{/if}
-                            #{if a.perfil.id == 3}
-                            <a href="../Interno/Administrador" type="button" class="bg-darkCyan fg-white fn-bolder btn-reveal"  style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;padding-left:1rem;padding-right:1rem;'>${a.perfil.Nombreperfil}</a>
-                            #{/if}
-                            #{if a.perfil.id == 4}
-                            <a href="../Interno/Listausuarios" type="button" class="bg-darkCyan fg-white fn-bolder btn-reveal"  style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;padding-left: 1rem;padding-right:1rem;'>${a.perfil.Nombreperfil}</a>
-                            #{/if}
-                        </div>
-                        #{/list}
-                        %{String idusuario = session.get("idusuario");
-                        }%
-                        ${idusuario}
-                       
-                        
-                    </div>
+<div class="panel">
+    <div class="panel-header bg-lightBlue fg-white">
+        <div class="text fg-white span12 " data-role="input-control" style="justify-items:center; font-family: serif; margin-left: 23%">
+            <p class="fn-bolder fg-white" style="  font-size: 2rem; font-family: serif; font-weight: bolder;">Bienvenido ${usua.Persona.Nombre} ${usua.Persona.ApellidoPaterno} ${usua.Persona.ApellidoMaterno} tus opciones son las siguientes.</p>
+            <image style="font-family: serif; width: 70px; height: auto;margin-left: 25rem;"src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLjl_IoptxOsrGg85d9QunbN-itF6qv2oUiMmhJHxmCPiBTGmUNKWPwl_ZLWASwE-_GGk&usqp=CAU'>
+        </div>
+    </div>
+    <div class="panel-content">
+        <div class="grid">
+            <div class="row">
+                <div class="fg-cyan fg-white text span12 "data-role="input-control"style="margin-left: 40%;">
+                    <label  >Ingresar como:</label>
                 </div>
             </div>
+            <div class="row "style="margin-left: 20%;">
+                #{list acceso,as: 'a'}
+                #{if a.perfil.id == 1}
+                <div class='span3'>
+
+                    <a href="../Escolares/Buscaralumno" type="button" class=" icon-pencil  fn-bolder "  style='font-family: serif;'>${a.perfil.Nombreperfil}</a>
+
+                </div>
+                #{/if}
+                #{if a.perfil.id == 2}
+                <div class='span3'>
+                    <a href="../Profesor/Calificaciones" type="button" class="  icon-user-3  fn-bolder "  style='font-family: serif;'>${ a.perfil.Nombreperfil}</a>
+                </div>
+                #{/if}
+                #{if a.perfil.id == 3}
+                <div class='span3'>
+                    <a href="../Alumnado/Expedientealumno" type="button" class=" fn-bolder icon-bookmark-4"  style='font-family: serif;'>${a.perfil.Nombreperfil}</a>
+                </div>
+                #{/if}
+                #{if a.perfil.id == 4}
+                <div class='span3'>
+                    <a href="../Interno/Listausuarios" type="button" class="  icon-unlocked fn-bolder "  style='font-family: serif; '>${a.perfil.Nombreperfil}</a>
+                </div>
+                #{/if}
+                #{/list}
+            </div>
+        </div>
+    </div>
+</div>
+

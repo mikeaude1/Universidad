@@ -1,76 +1,70 @@
 #{extends 'Menuintro.html' /}
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style> input{
 
-                padding: .2rem;
-            }
-            .a{
-                margin-left: 10rem;
-                font-family: serif;
-            }
-            label{
-                font-family: serif;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="row">
-            <div class="span5 offset2 bg-cyan  image-container elements" style='border-radius: 1em;'>
-                <div class="grid">
-                    <div class="row">
-                        <h2 class="fn-bolder fg-white" style="margin-left: 6rem;font-family: serif; font-weight: bolder;"> Crear un usuario Nuevo</h2>
-                        <<form action="/Interno/Administrador">
-                            <div class="bg-cyan fg-white text span6 "data-role="input-control"style="margin-left: 10rem;">
 
-                                <image  style="font-family: serif; width: 70px; height: auto;margin-left: 12% "src='https://png.pngtree.com/png-vector/20190321/ourlarge/pngtree-vector-users-icon-png-image_856952.jpg'>
-                                <label for='Nombre' >Nombre</label>
-                                <input name="nombre" id='Nombre' type='text' autofocus >
-                            </div>
-                            <div class="a fg-white" data-role="input-control" >
-                                <label for='apaterno'>Apellido Paterno</label>
-                                <input name="apaterno" id='apaterno' type='text' autofocus >
-                            </div>
-                            <div class=" a fg-white" data-role="input-control" >
-                                <label for='amaterno'>Apellido Materno</label>
-                                <input name="amaterno" id='amaterno' type='text' autofocus >
-                            </div>
-                            <div class="a fg-white input-control select" data-role="input-control" >
-                                <label for='perfil'>Perfil de Acceso</label>
-                                <select name="perfil" style="width:47%;" >
-                                    #{list perfil,as: 'p'}
-                                    <option >${p.Nombreperfil}</option>
-                                    #{/list}
-                                </select>
-                            </div>
-                            <br>
-                            <div class="fg-white a" data-role="input-control" >
-                                <label for='usuario'>Usuario</label>
-                                <input name="usuario" id='usuario' type='text' autofocus '>
-                            </div>
-                            <div class="password a fg-white" data-role="input-control" >
-                                <label for='password'>Contraseña</label>
-                                <input name="password" id='password' type="password" autofocus  >
-                            </div>
-                            <div class="password a fg-white" data-role="input-control" >
-                                <label for='password'>Confirmar Contraseña</label>
-                                <input name="confirmar password" id='password' type="password" autofocus >
-                            </div>
-                            <div class='span12 'style="  margin-top:1rem; width:44.5%">
-                                <button class="bg-darkCyan fg-white fn-bolder btn-reveal" style='border-radius: 10em; font-family: serif;width:36.5%;font-weight: bolder; font-size: 1.5rem;'>Guardar</button>
-                            </div>
-                        </form>
+
+<div class="panel">
+    <div class="panel-header bg-lightBlue fg-white" >
+        <div class="text fg-white span12 " data-role="input-control" style="justify-items:center; font-family: serif; margin-left: 40%">
+            <image style="margin-left:3.5rem; width: 300px"  src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-jcaE__Ar6hM6p2hIzDG9rlqdqYWpWEAovg&usqp=CAU'>
+
+            <h2 class="fn-bolder fg-white" style="margin-left: 3.5rem;font-family: serif; font-weight: bolder;"> Crear un usuario Nuevo</h2>
+        </div>
+    </div>
+    <form action="/Interno/Administrador">
+        <div class="panel-content">
+            <div class="grid">
+                <div class="row">
+                    <div class="a span4" data-role="input-control" >
+                        <label for='Nombre' >Nombre</label>
+                        <input name="nombre" id='Nombre' type='text' autofocus >
                     </div>
+                    <div class="a span4" data-role="input-control" >
+                        <label for='apaterno'>Apellido Paterno</label>
+                        <input name="apaterno" id='apaterno' type='text' autofocus >
+                    </div>
+                    <div class=" a span4" data-role="input-control" >
+                        <label for='amaterno'>Apellido Materno</label>
+                        <input name="amaterno" id='amaterno' type='text' autofocus >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="a span12 input-control select" data-role="input-control" style="width:100%;"  >
+                        <label for='perfil'>Perfil de Acceso</label>
+                        <select name="perfil"  >
+                            <option >Selecciona el tipo de Acceso</option>
+                            #{list perfil,as: 'p'}
+                            <option >${p.Nombreperfil}</option>
+                            #{/list}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="a span4" data-role="input-control" >
+                        <label for='usuario'>Usuario</label>
+                        <input name="usuario" id='usuario' type='text' autofocus>
+                    </div>
+                    <div class="span4  password a " data-role="input-control" >
+                        <label for='password'>Contraseña</label>
+                        <input name="password" id='password' type="password" autofocus  >
+                    </div>
+                    <div class="span4 password a " data-role="input-control" >
+                        <label for='password'>Confirmar Contraseña</label>
+                        <input name="confirmar password" id='password' type="password" autofocus >
+                    </div>
+                    <div class="row">
+                        <div class='span12 ' style="  margin-top:2rem;">
+                            <button class="bg-darkCyan  fn-bolder btn-reveal" style='font-family: serif;width:100%;font-weight: bolder; font-size: 1.5rem;'>Guardar</button>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </form>
+</div>
+
+

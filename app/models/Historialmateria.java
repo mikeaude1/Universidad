@@ -50,23 +50,59 @@ public class Historialmateria extends Model {
 
         return count > 0 ? total / 5 : 0.0;
     }
- public boolean obtenertipofalta(Date fecha) {
-     
+
+    public boolean obtenertipofalta(Date fecha) {
+
         try {
-             Asistencias tipo =Asistencias.find("Historialmateria=? AND Fecha=?", this, fecha).first();
-            return tipo.Tipodeasistencia.id==3l;
+            Asistencias tipo = Asistencias.find("Historialmateria=? AND Fecha=?", this, fecha).first();
+            return tipo.Tipodeasistencia.id == 3l;
         } catch (Exception e) {
             return false;
         }
     }
- 
-  public boolean obtenerjustificacion(long hd,Date fecha) {
+
+    public boolean obtenerjustificacion(long hd, Date fecha) {
         try {
             Asistencias justi = Asistencias.find("Historialdocente=? AND Historialmateria=? AND Fecha=?", hd, this, fecha).first();
-            
-            return justi.Justificacion==true;
+
+            return justi.Justificacion == true;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public List obtenerasistencias() {
+
+        List<Asistencias> asis = Asistencias.find("Historialmateria=?", this).fetch();
+        return asis;
+
+    }
+
+    public int Cantidadasistencias(int tipo) {
+        List<Asistencias> asistencia = Asistencias.find("Historialmateria=?", this).fetch();
+        int asistencias = 0;
+        int faltas = 0;
+        int retardos = 0;
+        for (Asistencias asis : asistencia) {
+            if (asis.Tipodeasistencia.Tipo.equals("Asistencia")) {
+                asistencias++;
+            }
+            if (asis.Tipodeasistencia.Tipo.equals("Falta")) {
+                faltas++;
+            }
+            if (asis.Tipodeasistencia.Tipo.equals("Retardo")) {
+                retardos++;
+            }
+        }
+        if (tipo == 1) {
+            return (asistencias);
+        }
+        if (tipo == 2) {
+            return (retardos);
+        }
+        if (tipo == 3) {
+            return (faltas);
+        }
+        return 0;
     }
 }

@@ -33,17 +33,9 @@
 
         <style>
 
-            .m {
-                background-color: midnightblue;
-                transition: background-color 0.3s ease !important;
-            }
 
 
-            .m:hover {
-                background-color: DeepSkyBlue !important;
-            }
-
-            body {
+            html{
                 background-image: url('/public/images/infor.png');
                 background-size: cover;
                 background-position: center center;
@@ -69,7 +61,7 @@
 
     </head>
     <body class="metro" style="margin: 0 auto; position:sticky;">
-        <nav class="grid"  >
+        <nav class="grid-fluid"  >
 
             <nav class="navigation-bar bg-darkBlue"  >
                 <nav class="navigation-bar-content ">
@@ -103,9 +95,9 @@
 
             </nav>
 
-            <div style="padding-left: 230px; padding-top: 5px;">
-                #{doLayout /}
-            </div>
+
+            #{doLayout /}
+
 
         </div>
 </body>

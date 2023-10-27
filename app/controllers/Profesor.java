@@ -15,11 +15,11 @@ public class Profesor extends Controller {
 
     @Before
     static void checkAuth() {
-
+   try {
         String idusuario = session.get("idusuario");
         long idusuarios = Long.parseLong(idusuario);
         Usuarios usuario = Usuarios.findById(idusuarios);
-        try {
+     
             Accesos acceso = Accesos.find("usuario.id=? AND perfil.Nivelacceso=?", usuario.id, 2).first();
 
             if (acceso == null) {

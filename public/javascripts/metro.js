@@ -1,7 +1,7 @@
 /*
- * Metro 4 Components Library v4.5.0  (https://metroui.org.ua)
- * Copyright 2012-2021 Sergey Pimenov
- * Built at 01/08/2021 18:53:43
+ * Metro UI Components Library v4.5.1  (https://metroui.org.ua)
+ * Copyright 2012-2022 Sergey Pimenov
+ * Built at 01/09/2022 18:29:28
  * Licensed under MIT
  */
 /*!
@@ -397,7 +397,8 @@
             return fnFormat.bind(this)(result, locale)
         }
     });
-}());(function() {
+}());
+(function() {
     'use strict';
 
     Datetime.use({
@@ -1354,6 +1355,47 @@
                 return this.clone().add(-1, 'day');
             }
             return this.add(-1, 'day');
+        }
+    })
+}());
+(function() {
+    'use strict';
+
+    function getResult (val) {
+        var res
+        var seconds = Math.floor(val / 1000),
+            minutes = Math.floor(seconds / 60),
+            hours = Math.floor(minutes / 60),
+            days = Math.floor(hours / 24),
+            months = Math.floor(days / 30),
+            years = Math.floor(months / 12)
+
+        if (years >= 1) res = years+" year";
+        if (months >= 1 && years < 1) res = months+" mon";
+        if (days >= 1 && days <= 30) res = days+" days";
+        if (hours && hours < 24) res = hours+" hour";
+        if (minutes && (minutes >= 40 && minutes < 60)) res = "less a hour";
+        if (minutes && minutes < 40) res = minutes+" min";
+        if (seconds && seconds >= 30 && seconds < 60) res = seconds+" sec";
+        if (seconds < 30) res = "few sec";
+
+        return res
+    }
+
+    Datetime.useStatic({
+        timeLapse: function(date){
+            var old = datetime(date),
+                now = datetime(),
+                val = now - old
+
+            return getResult(val)
+        }
+    });
+
+    Datetime.use({
+        timeLapse: function() {
+            var val = datetime() - +this
+            return getResult(val)
         }
     })
 }());
@@ -7196,9 +7238,9 @@ $.noConflict = function() {
 
     var Metro = {
 
-        version: "4.5.0",
-        compileTime: "01/08/2021 18:53:43",
-        buildNumber: "755",
+        version: "4.5.1",
+        compileTime: "01/09/2022 18:29:28",
+        buildNumber: "758",
         isTouchable: isTouch,
         fullScreenEnabled: document.fullscreenEnabled,
         sheet: null,
@@ -14120,6 +14162,254 @@ $.noConflict = function() {
 (function(Metro, $) {
     'use strict';
     var Utils = Metro.utils;
+    var CHECKBOX_STATE_CHECKED = 1
+    var CHECKBOX_STATE_UNCHECKED = -1
+    var CHECKBOX_STATE_INDETERMINATE = 0
+    var CheckboxThreeStateDefaultConfig = {
+        checkboxDeferred: 0,
+        state: CHECKBOX_STATE_UNCHECKED,
+        transition: true,
+        style: 1,
+        caption: "",
+        captionPosition: "right",
+        clsCheckbox: "",
+        clsCheck: "",
+        clsCaption: "",
+        onCheckboxCreate: Metro.noop
+    };
+
+    Metro.metroCheckboxThreeStateSetup = function (options) {
+        CheckboxThreeStateDefaultConfig = $.extend({}, CheckboxThreeStateDefaultConfig, options);
+    };
+
+    if (typeof window["metroCheckboxThreeStateSetup"] !== undefined) {
+        Metro.metroCheckboxThreeStateSetup(window["metroCheckboxThreeStateSetup"]);
+    }
+
+    Metro.Component('checkbox-three-state', {
+        init: function( options, elem ) {
+            this._super(elem, options, CheckboxThreeStateDefaultConfig, {
+                origin: {
+                    className: ""
+                },
+                state: CHECKBOX_STATE_UNCHECKED
+            });
+
+            return this;
+        },
+
+        _create: function(){
+            var o = this.options;
+
+            if (this.elem.checked) {
+                o.state = 1;
+            }
+            this.elem.checked = false;
+
+            if (o.state === -1 || o.state === "unchecked") {
+                this.state = CHECKBOX_STATE_UNCHECKED
+            } else if (o.state === 0 || o.state === "indeterminate") {
+                this.state = CHECKBOX_STATE_INDETERMINATE
+            } else {
+                this.state = CHECKBOX_STATE_CHECKED
+            }
+
+            this._createStructure();
+            this._createEvents();
+            this._fireEvent("checkbox-create");
+        },
+
+        _indeterminate: function(v){
+            var element = this.element;
+
+            v = Utils.isNull(v) ? true : Utils.bool(v);
+
+            element[0].indeterminate = v;
+            element.attr("data-indeterminate", v);
+        },
+
+        _createStructure: function(){
+            var element = this.element, o = this.options;
+            var checkbox;
+            var check = $("<span>").addClass("check");
+            var caption = $("<span>").addClass("caption").html(o.caption);
+
+            element.attr("type", "checkbox");
+
+            if (element.attr("readonly") !== undefined) {
+                element.on("click", function(e){
+                    e.preventDefault();
+                })
+            }
+
+            checkbox = element
+                .wrap("<label>")
+                .addClass("checkbox " + element[0].className)
+                .addClass(o.style === 2 ? "style2" : "");
+
+            check.appendTo(checkbox);
+            caption.appendTo(checkbox);
+
+            if (o.transition === true) {
+                checkbox.addClass("transition-on");
+            }
+
+            if (o.captionPosition === 'left') {
+                checkbox.addClass("caption-left");
+            }
+
+            this.origin.className = element[0].className;
+            element[0].className = '';
+
+            checkbox.addClass(o.clsCheckbox);
+            caption.addClass(o.clsCaption);
+            check.addClass(o.clsCheck);
+
+            this._drawState()
+
+            if (element.is(':disabled')) {
+                this.disable();
+            } else {
+                this.enable();
+            }
+        },
+
+        _drawState: function(){
+            var element = this.element;
+
+            element[0].checked = false;
+            this._indeterminate(false)
+
+            if (this.state === CHECKBOX_STATE_INDETERMINATE) {
+                element[0].checked = true;
+                this._indeterminate(true)
+            } else if (this.state === CHECKBOX_STATE_CHECKED) {
+                element[0].checked = true;
+            }
+        },
+
+        _createEvents: function(){
+            var element = this.element,
+                check = element.siblings(".check");
+            var that = this
+
+            element.on("click", function(){
+                that.state++
+                if (that.state === 2) {
+                    that.state = -1
+                }
+                that._drawState()
+            })
+
+            element.on("focus", function(){
+                check.addClass("focused");
+            });
+
+            element.on("blur", function(){
+                check.removeClass("focused");
+            });
+        },
+
+        check: function(){
+            this.setCheckState(CHECKBOX_STATE_CHECKED)
+        },
+
+        uncheck: function(){
+            this.setCheckState(CHECKBOX_STATE_UNCHECKED)
+        },
+
+        indeterminate: function(){
+            this.setCheckState(CHECKBOX_STATE_INDETERMINATE)
+        },
+
+        setCheckState: function(state){
+            if (state === -1 || state === "unchecked") {
+                this.state = CHECKBOX_STATE_UNCHECKED
+            } else if (state === 0 || state === "indeterminate") {
+                this.state = CHECKBOX_STATE_INDETERMINATE
+            } else {
+                this.state = CHECKBOX_STATE_CHECKED
+            }
+
+            this._drawState();
+
+            return this;
+        },
+
+        getCheckState: function(asString){
+            if (!asString) {
+                return this.state;
+            }
+
+            switch (this.state) {
+                case -1: return "unchecked";
+                case 0: return "indeterminate";
+                case 1: return "checked";
+            }
+        },
+
+        disable: function(){
+            this.element.data("disabled", true);
+            this.element.parent().addClass("disabled");
+        },
+
+        enable: function(){
+            this.element.data("disabled", false);
+            this.element.parent().removeClass("disabled");
+        },
+
+        toggle: function(){
+            this.state++
+            if (this.state === 2) {
+                this.state = -1
+            }
+            this._drawState()
+        },
+
+        changeAttribute: function(attr, newVal){
+            var element = this.element, o = this.options;
+            var parent = element.parent();
+
+            var changeStyle = function(){
+                var new_style = parseInt(element.attr("data-style"));
+
+                if (!Utils.isInt(new_style)) return;
+
+                o.style = new_style;
+                parent.removeClass("style1 style2").addClass("style"+new_style);
+            };
+
+            var toggleElementAccessible = function(){
+                if (this.elem.disabled) {
+                    this.disable();
+                } else {
+                    this.enable();
+                }
+            };
+
+            var changeState = function(val){
+                this.toggle(val);
+            };
+
+            switch (attr) {
+                case 'disabled': toggleElementAccessible(); break;
+                case 'data-style': changeStyle(); break;
+                case 'data-state': changeState(newVal); break;
+            }
+        },
+
+        destroy: function(){
+            var element = this.element;
+            element.off("focus");
+            element.off("blur");
+            return element;
+        }
+    });
+}(Metro, m4q));
+
+(function(Metro, $) {
+    'use strict';
+    var Utils = Metro.utils;
     var CheckboxDefaultConfig = {
         checkboxDeferred: 0,
         transition: true,
@@ -17809,7 +18099,11 @@ $.noConflict = function() {
             clearInterval(this.tickInterval);
 
             element.find(".part").removeClass(o.clsZero);
-            element.find(".digit").html("0");
+
+            var digit = element.find(".digit").clear();
+
+            digit.append($("<span class='digit-placeholder'>").html("0"));
+            digit.append($("<span class='digit-value'>").html("0"));
 
             this._setBreakpoint();
 
@@ -17819,6 +18113,25 @@ $.noConflict = function() {
 
             this.blinkInterval = setInterval(function(){that.blink();}, 500);
             this.tickInterval = setInterval(function(){that.tick();}, 1000);
+        },
+
+        resetWith: function(val){
+            var that = this, element = this.element, o = this.options;
+
+            if (typeof val === "string") {
+                element.attr("data-date", val)
+                o.date = val
+            } else if (typeof val === 'object') {
+                var keys = ["days", "hours", "minutes", "seconds"]
+                $.each(keys, function(i, v){
+                    if (Metro.utils.isValue(val[v])) {
+                        element.attr("data-"+v, val[v])
+                        o[v] = val[v]
+                    }
+                })
+            }
+
+            this.reset()
         },
 
         togglePlay: function(){
@@ -19507,16 +19820,6 @@ $.noConflict = function() {
             })
 
             title.html(Metro.utils.exec(o.onDrawValue, [title_value + o.cap]));
-
-            // title.animate({
-            //     draw: {
-            //         innerHTML: title_value
-            //     },
-            //     dur: o.animate,
-            //     onFrame: function(){
-            //         this.innerHTML = Metro.utils.exec(o.onDrawValue, [this.innerHTML + o.cap]);
-            //     }
-            // });
         },
 
         val: function(v){
@@ -19540,11 +19843,12 @@ $.noConflict = function() {
         },
 
         setColor: function(obj){
-            var validKeys = ["background, fill, stroke, color"]
+            var validKeys = ["background", "fill", "stroke", "color"]
+            var that = this
 
             $.each(obj, function(key, val){
                 if (validKeys.indexOf(key) !== -1) {
-                    this.options[key] = val
+                    that.options[key] = val
                 }
             })
 
@@ -25239,8 +25543,47 @@ $.noConflict = function() {
             this._draw();
         },
 
-        loadData: function(source){
+        setData: function(data){
             var that = this, element = this.element, o = this.options;
+
+            if (Utils.isValue(data) !== true) {
+                return ;
+            }
+
+            that._createItemsFromJSON(data);
+
+            element.html("");
+
+            if (Utils.isValue(o.filterString)) {
+                that.filterString = o.filterString;
+            }
+
+            var filter_func;
+
+            if (Utils.isValue(o.filter)) {
+                filter_func = Utils.isFunc(o.filter);
+                if (filter_func === false) {
+                    filter_func = Utils.func(o.filter);
+                }
+                that.filterIndex = that.addFilter(filter_func);
+            }
+
+            if (Utils.isValue(o.filters) && typeof o.filters === 'string') {
+                $.each(o.filters.toArray(), function(){
+                    filter_func = Utils.isFunc(this);
+                    if (filter_func !== false) {
+                        that.filtersIndexes.push(that.addFilter(filter_func));
+                    }
+                });
+            }
+
+            that.currentPage = 1;
+
+            that.sorting(o.sortClass, o.sortDir, true);
+        },
+
+        loadData: function(source){
+            var that = this, o = this.options;
 
             if (Utils.isValue(source) !== true) {
                 return ;
@@ -25260,37 +25603,7 @@ $.noConflict = function() {
                         source: o.source,
                         data: data
                     });
-
-                    that._createItemsFromJSON(data);
-
-                    element.html("");
-
-                    if (Utils.isValue(o.filterString)) {
-                        that.filterString = o.filterString;
-                    }
-
-                    var filter_func;
-
-                    if (Utils.isValue(o.filter)) {
-                        filter_func = Utils.isFunc(o.filter);
-                        if (filter_func === false) {
-                            filter_func = Utils.func(o.filter);
-                        }
-                        that.filterIndex = that.addFilter(filter_func);
-                    }
-
-                    if (Utils.isValue(o.filters) && typeof o.filters === 'string') {
-                        $.each(o.filters.toArray(), function(){
-                            filter_func = Utils.isFunc(this);
-                            if (filter_func !== false) {
-                                that.filtersIndexes.push(that.addFilter(filter_func));
-                            }
-                        });
-                    }
-
-                    that.currentPage = 1;
-
-                    that.sorting(o.sortClass, o.sortDir, true);
+                    that.setData(data)
                 })
                 .catch(function(error){
                     that._fireEvent("data-load-error", {
@@ -32723,6 +33036,7 @@ $.noConflict = function() {
 
         tableRowsCountTitle: null,
         tableSearchTitle: null,
+        tableSearchPlaceholder: "",
         tableInfoTitle: null,
         paginationPrevTitle: null,
         paginationNextTitle: null,
@@ -33195,50 +33509,55 @@ $.noConflict = function() {
             var that = this, element = this.element;
             var head = element.find("thead");
 
-            if (head.length > 0) $.each(head.find("tr > *"), function(){
-                var item = $(this);
-                var dir, head_item, item_class;
+            if (head.length > 0) {
+                $.each(head.find("tr > *"), function () {
+                    var item = $(this);
+                    var dir, head_item, item_class;
 
-                if (Utils.isValue(item.data('sort-dir'))) {
-                    dir = item.data('sort-dir');
-                } else {
-                    if (item.hasClass("sort-asc")) {
-                        dir = "asc";
-                    } else if (item.hasClass("sort-desc")) {
-                        dir = "desc"
+                    if (item.hasClass('rownum-cell') || item.hasClass('check-cell')) return
+
+                    if (Utils.isValue(item.data('sort-dir'))) {
+                        dir = item.data('sort-dir');
                     } else {
-                        dir = undefined;
+                        if (item.hasClass("sort-asc")) {
+                            dir = "asc";
+                        } else if (item.hasClass("sort-desc")) {
+                            dir = "desc"
+                        } else {
+                            dir = undefined;
+                        }
                     }
-                }
 
-                item_class = item[0].className.replace("sortable-column", "");
-                item_class = item_class.replace("sort-asc", "");
-                item_class = item_class.replace("sort-desc", "");
-                item_class = item_class.replace("hidden", "");
+                    item_class = item[0].className.replace("sortable-column", "");
+                    item_class = item_class.replace("sort-asc", "");
+                    item_class = item_class.replace("sort-desc", "");
+                    item_class = item_class.replace("hidden", "");
 
-                head_item = {
-                    type: "data",
-                    title: item.html(),
-                    name: Utils.isValue(item.data("name")) ? item.data("name") : item.text().replace(" ", "_"),
-                    sortable: item.hasClass("sortable-column") || (Utils.isValue(item.data('sortable')) && JSON.parse(item.data('sortable')) === true),
-                    sortDir: dir,
-                    format: Utils.isValue(item.data("format")) ? item.data("format") : "string",
-                    formatMask: Utils.isValue(item.data("format-mask")) ? item.data("format-mask") : null,
-                    clsColumn: Utils.isValue(item.data("cls-column")) ? item.data("cls-column") : "",
-                    cls: item_class,
-                    colspan: item.attr("colspan"),
-                    size: Utils.isValue(item.data("size")) ? item.data("size") : "",
-                    show: !(item.hasClass("hidden") || (Utils.isValue(item.data('show')) && JSON.parse(item.data('show')) === false)),
+                    head_item = {
+                        type: "data",
+                        title: item.html(),
+                        name: Utils.isValue(item.data("name")) ? item.data("name") : item.text().replace(" ", "_"),
+                        sortable: item.hasClass("sortable-column") || (Utils.isValue(item.data('sortable')) && JSON.parse(item.data('sortable')) === true),
+                        sortDir: dir,
+                        format: Utils.isValue(item.data("format")) ? item.data("format") : "string",
+                        formatMask: Utils.isValue(item.data("format-mask")) ? item.data("format-mask") : null,
+                        clsColumn: Utils.isValue(item.data("cls-column")) ? item.data("cls-column") : "",
+                        cls: item_class,
+                        colspan: item.attr("colspan"),
+                        size: Utils.isValue(item.data("size")) ? item.data("size") : "",
+                        show: !(item.hasClass("hidden") || (Utils.isValue(item.data('show')) && JSON.parse(item.data('show')) === false)),
 
-                    required: Utils.isValue(item.data("required")) ? JSON.parse(item.data("required")) === true  : false,
-                    field: Utils.isValue(item.data("field")) ? item.data("field") : "input",
-                    fieldType: Utils.isValue(item.data("field-type")) ? item.data("field-type") : "text",
-                    validator: Utils.isValue(item.data("validator")) ? item.data("validator") : null,
+                        required: Utils.isValue(item.data("required")) ? JSON.parse(item.data("required")) === true : false,
+                        field: Utils.isValue(item.data("field")) ? item.data("field") : "input",
+                        fieldType: Utils.isValue(item.data("field-type")) ? item.data("field-type") : "text",
+                        validator: Utils.isValue(item.data("validator")) ? item.data("validator") : null,
 
-                    template: Utils.isValue(item.data("template")) ? item.data("template") : null
-                };
-                that.heads.push(head_item);
-            });
+                        template: Utils.isValue(item.data("template")) ? item.data("template") : null
+                    };
+                    that.heads.push(head_item);
+                });
+                // head.clear();
+            }
         },
 
         _createFootsFromHTML: function(){
@@ -33329,14 +33648,16 @@ $.noConflict = function() {
 
             tr = $("<tr>").addClass(o.clsHeadRow).appendTo(head);
 
+
             $.each(this.service, function(){
                 var item = this, classes = [];
-                th = $("<th>").appendTo(tr);
+                var th = $("<th>");
                 if (Utils.isValue(item.title)) {th.html(item.title);}
                 if (Utils.isValue(item.size)) {th.css({width: item.size});}
                 if (Utils.isValue(item.cls)) {classes.push(item.cls);}
                 classes.push(o.clsHeadCell);
                 th.addClass(classes.join(" "));
+                tr.append(th)
             });
 
             cells = this.heads;
@@ -33349,13 +33670,26 @@ $.noConflict = function() {
                 var item = this;
                 var classes = [];
 
-                th = $("<th>");
+                var th = $("<th>");
                 th.data("index", cell_index);
 
                 if (Utils.isValue(item.title)) {th.html(item.title);}
                 if (Utils.isValue(item.format)) {th.attr("data-format", item.format);}
+                if (Utils.isValue(item.formatMask)) {th.attr("data-format-mask", item.formatMask);}
                 if (Utils.isValue(item.name)) {th.attr("data-name", item.name);}
                 if (Utils.isValue(item.colspan)) {th.attr("colspan", item.colspan);}
+                if (Utils.isValue(item.size)) {th.attr("data-size", item.size);}
+                if (Utils.isValue(item.sortable)) {th.attr("data-sortable", item.sortable);}
+                if (Utils.isValue(item.sortDir)) {th.attr("data-sort-dir", item.sortDir);}
+                if (Utils.isValue(item.clsColumn)) {th.attr("data-cls-column", item.clsColumn);}
+                if (Utils.isValue(item.cls)) {th.attr("data-cls", item.cls);}
+                if (Utils.isValue(item.colspan)) {th.attr("colspan", item.colspan);}
+                if (Utils.isValue(item.show)) {th.attr("data-show", item.show);}
+                if (Utils.isValue(item.required)) {th.attr("data-required", item.required);}
+                if (Utils.isValue(item.field)) {th.attr("data-field", item.field);}
+                if (Utils.isValue(item.fieldType)) {th.attr("data-field-type", item.fieldType);}
+                if (Utils.isValue(item.validator)) {th.attr("data-validator", item.validator);}
+                if (Utils.isValue(item.template)) {th.attr("data-template", item.template);}
                 if (Utils.isValue(view[cell_index]['size'])) {th.css({width: view[cell_index]['size']});}
                 if (item.sortable === true) {
                     classes.push("sortable-column");
@@ -33455,7 +33789,7 @@ $.noConflict = function() {
             search_block = Utils.isValue(this.wrapperSearch) ? this.wrapperSearch : $("<div>").addClass("table-search-block").addClass(o.clsSearch).appendTo(top_block);
             search_block.addClass(o.clsSearch);
 
-            search_input = $("<input>").attr("type", "text").appendTo(search_block);
+            search_input = $("<input>").attr("type", "text").attr("placeholder", o.tableSearchPlaceholder).appendTo(search_block);
             Metro.makePlugin(search_input, "input", {
                 prepend: o.tableSearchTitle || that.locale.table["search"]
             });
@@ -34516,23 +34850,27 @@ $.noConflict = function() {
         },
 
         setData: function(/*obj*/ data){
-            var o = this.options;
+            var that = this, o = this.options;
 
-            this.items = [];
-            this.heads = [];
-            this.foots = [];
+            this.activity.show(function() {
+                that.items = [];
+                that.heads = [];
+                that.foots = [];
 
-            if (Array.isArray(o.head)) {
-                this.heads = o.head;
-            }
+                if (Array.isArray(o.head)) {
+                    that.heads = o.head;
+                }
 
-            if (Array.isArray(o.body)) {
-                this.items = o.body;
-            }
+                if (Array.isArray(o.body)) {
+                    that.items = o.body;
+                }
 
-            this._createItemsFromJSON(data);
+                that._createItemsFromJSON(data);
 
-            this._rebuild(true);
+                that._rebuild(true);
+
+                that.activity.hide();
+            })
 
             return this;
         },
@@ -35180,6 +35518,7 @@ $.noConflict = function() {
         expandPoint: null,
         tabsPosition: "top",
         tabsType: "default",
+        updateUri: false,
 
         clsTabs: "",
         clsTabsList: "",
@@ -35187,6 +35526,8 @@ $.noConflict = function() {
         clsTabsListItemActive: "",
 
         onTab: Metro.noop,
+        onTabOpen: Metro.noop,
+        onTabClose: Metro.noop,
         onBeforeTab: Metro.noop_true,
         onTabsCreate: Metro.noop
     };
@@ -35210,11 +35551,12 @@ $.noConflict = function() {
         },
 
         _create: function(){
-            var element = this.element;
+            var element = this.element, o = this.options;
             var tab = element.find(".active").length > 0 ? $(element.find(".active")[0]) : undefined;
 
             this._createStructure();
             this._createEvents();
+
             this._open(tab);
 
             this._fireEvent("tabs-create", {
@@ -35311,6 +35653,11 @@ $.noConflict = function() {
                 var href = link.attr("href").trim();
                 var tab = link.parent("li");
 
+                that._fireEvent("tab", {
+                    tab: tab[0],
+                    target: tab.children("a").attr("href")
+                });
+
                 if (tab.hasClass("active")) {
                     e.preventDefault();
                 }
@@ -35330,6 +35677,30 @@ $.noConflict = function() {
                     e.preventDefault();
                 }
             });
+
+            $(window).on("hashchange", function(e){
+                var hash, tab;
+
+                if (o.updateUri) {
+                    hash = window.location.hash;
+                    tab = that._findTabByTarget(hash)
+                    that._open($(tab))
+                }
+            });
+        },
+
+        _findTabByTarget: function(target){
+            var element = this.element;
+            var tabs = element.find("li")
+            var tab = undefined
+
+            tabs.each(function(i, el){
+                if (!tab && $(el).children("a").attr("href") === target) {
+                    tab = el
+                }
+            })
+
+            return tab
         },
 
         _collectTargets: function(){
@@ -35350,7 +35721,7 @@ $.noConflict = function() {
             var element = this.element, o = this.options;
             var tabs = element.find("li");
             var expandTitle = element.siblings(".expand-title");
-
+            var activeTab = element.find("li.active");
 
             if (tabs.length === 0) {
                 return;
@@ -35381,6 +35752,9 @@ $.noConflict = function() {
             });
 
             if (target !== "#" && target[0] === "#") {
+                if (o.updateUri) {
+                    window.location.hash = target
+                }
                 $(target).show();
             }
 
@@ -35388,9 +35762,17 @@ $.noConflict = function() {
 
             tab.addClass(o.clsTabsListItemActive);
 
-            this._fireEvent("tab", {
-                tab: tab[0]
-            });
+            if (!activeTab.is(tab)) {
+                this._fireEvent("tab-open", {
+                    tab: tab[0],
+                    target: tab.children("a").attr("href")
+                });
+
+                this._fireEvent("tab-close", {
+                    tab: activeTab[0],
+                    target: activeTab.children("a").attr("href")
+                });
+            }
         },
 
         next: function(){
@@ -35410,6 +35792,13 @@ $.noConflict = function() {
             next = active_tab.prev("li");
             if (next.length > 0) {
                 this._open(next);
+            }
+        },
+
+        openByTarget: function(target){
+            var tab = this._findTabByTarget(target);
+            if (tab) {
+                this._open($(tab));
             }
         },
 
