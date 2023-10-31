@@ -1,55 +1,39 @@
 #{extends 'Menuintro.html' /}
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>Inscribir Alumno</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body metro>
-        <div class="grid fluid">
-            <div class="row">
+<div class="grid fluid">
+    <div class="row">
+        <div class="span12"><h1>Inscribir</h1></div>
+        <br>
+    </div>
+    <div class="row">
 
-                <div class="span6 input-control select">
-                    <label >Carreras:</label>
+        <div class="span12 input-control select">
 
-                    <select  id="idcarrera"   name='carrera' onchange="tabla()">
-                        <label>Carreras</label>
-                        <option value="0">Selecciona la Carrera</option>
-                        #{list carrera,as: 'C'}
-                        <option value="${C.id}">${C.Nombre}</option>
-                        #{/list}
+            <label>Carreras</label>
+            <select  id="idcarrera"   name='carrera' onchange="tabla()">
+                <option value="0">Selecciona la Carrera</option>
+                #{list carrera,as: 'C'}
+                <option value="${C.id}">${C.Nombre}</option>
+                #{/list}
 
-                    </select>
+            </select>
 
-                </div>
-                <br>
-                <div class="row">
-                    <div class="span12" id="aspirant">
-
-                    </div>
-
-
-                    <script>
-                        function tabla() {
-
-                            var idcarrera = $("#idcarrera").val();
-                            $.get("/Escolares/Tablaaspirantes", {
-                                "idcarrera": idcarrera
-
-                            }
-                            , function (respuesta) {
-                                $("#aspirant").html(respuesta);
-                            });
-                        }
-
-                    </script>
-                </div>
-            </div>
         </div>
-    </body>
-</html>
+
+    </div>
+
+    <div class="row">
+        <div class="span12" id="aspirant">
+        </div>
+    </div>
+</div>
+<script>
+    function tabla() {
+        var idcarrera = $("#idcarrera").val();
+        $.get("/Escolares/Tablaaspirantes", {
+            "idcarrera": idcarrera
+        }
+        , function (respuesta) {
+            $("#aspirant").html(respuesta);
+        });
+    }
+</script>

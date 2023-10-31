@@ -5,8 +5,7 @@
 <script>
     $(document).ready(function(){
     $.Metro.initInputs();
-    });
-</script>
+    });</script>
 <div class='grid'>
     <div class='row'>
         <div class='span12'>
@@ -33,7 +32,7 @@
                                 <ul>
                                     #{list allperfiles, as: 'perfil'}
                                     #{if perfil.Traerperfil(usua.id)}
-                                    <li >${perfil.Nombreperfil} <button class="right-button"  onclick="activarDesactivar(${usua.id}, ${perfil.id}, 1)"><i class="icon-arrow-right-4">Desactivar perfil</i></button></li>
+                                    <li id="perfil${perfil.id}">${perfil.Nombreperfil} <button class="right-button"  onclick="activarDesactivar(${usua.id}, ${perfil.id}, 1)"><i class="icon-arrow-right-4">Desactivar perfil</i></button></li>
                                     <br>
                                     <br>
                                     #{/if}
@@ -45,7 +44,7 @@
                                 <ul>
                                     #{list allperfiles, as: 'perfil'}
                                     #{if !perfil.Traerperfil(usua.id)}
-                                    <li>${perfil.Nombreperfil} <button class="right-button"  onclick="activarDesactivar(${usua.id}, ${perfil.id}, 2);"><i class="icon-arrow-left-4">Activar perfil</i></button></li>
+                                    <li id="perfil${perfil.id}">${perfil.Nombreperfil} <button class="right-button"  onclick="activarDesactivar(${usua.id}, ${perfil.id}, 2);"><i class="icon-arrow-left-4">Activar perfil</i></button></li>
                                     <br><!-- comment -->
                                     <br>
                                     #{/if}
@@ -69,12 +68,15 @@
 </div>
 </div>
 <script>function activarDesactivar(usuario, perfil, activo) {
+    $("#perfil" + perfil).fadeOut();
     $.post("/Interno/activarDesactivarPerfil", {
+
     "usuario":usuario,
             "perfil":perfil,
             "activo":activo
     }, function(data1) {
     if (data1 == "success") {
+
     // La función se ejecutó con éxito
     alert("Perfil activado/desactivado con éxito.");
     } else {

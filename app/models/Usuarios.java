@@ -39,4 +39,9 @@ public class Usuarios extends Model {
         }
 
     }
+    public List<Menus> Obtenermenu(long Perfil){
+        List<Menus> menu=Menus.find("Perfil.id=? AND Activo=?",Perfil,true).fetch();
+        return menu;
+    
+    }
 }

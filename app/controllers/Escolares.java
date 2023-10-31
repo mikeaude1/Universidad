@@ -157,13 +157,8 @@ public class Escolares extends Controller {
         List<Historialalumnos> halumnos = Historialalumnos.find("alumno.id=? AND activo = true", p).fetch();
         //List<Calificaciones> calificacion = Calificaciones.find("Historialmateria.Historialalumno.id=?", alumnos.id).fetch();
         // System.out.println(calificacion + "sisoy");
-        
-        
-         String idusuario = session.get("idusuario");
-        long idusuarios = Long.parseLong(idusuario);
-        Usuarios usuario = Usuarios.findById(idusuarios);
-
-        List<Historialmateria> hmig = Historialmateria.find("Historialalumno.alumno.Persona=?", usuario.Persona).fetch();
+         
+        List<Historialmateria> hmig = Historialmateria.find("Historialalumno.alumno=?", persona).fetch();
        
      
         render(persona, alumnos, Materia, carrera, halumnos, p, hmig);

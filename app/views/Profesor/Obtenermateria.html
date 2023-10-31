@@ -1,41 +1,28 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>
-            <label for='materia'>Materia</label>
-            <select id='hdocente' onchange='traertabla()'>
-                <option value='0'>Selecciona la Materia</option>
-                #{list hdocente, as: 'hd'}
 
-                <option value='${hd.id}'>${hd.materia?.Nombre}         ${hd.persona.Nombre} ${hd.persona.ApellidoPaterno} ${hd.persona.ApellidoMaterno}  ${hd.grupo.id} ${hd.grupo.Nombre}</option>
-                #{/list}
 
-            </select>
-        </div>
-        <div class="row">
-            <div class="span12" id="resul"></div>
-        </div>
-        <script>
+<label for='materia'>Materia</label>
+<select id='hdocente' onchange='traertabla()'>
+    <option value='0'>Selecciona la Materia</option>
+    #{list hdocente, as: 'hd'}
 
-            function traertabla() {
-                var hdocente = $("#hdocente").val();
-                $.post("/Profesor/Tablacalificaciones", {
+    <option value='${hd.id}'>${hd.materia?.Nombre}         ${hd.persona.Nombre} ${hd.persona.ApellidoPaterno} ${hd.persona.ApellidoMaterno}  ${hd.grupo.id} ${hd.grupo.Nombre}</option>
+    #{/list}
 
-                    "hdocente": hdocente,
-                    "periodo": "${periodo}"
-                }, function (respuesta) {
-                    $("#resul").html(respuesta);
-                });
-            }
-        </script>
-    </body>
-</html>
+</select>
+
+<div class='row'>
+    <div class="span12" id="resul"></div>
+</div>
+<script>
+
+    function traertabla() {
+        var hdocente = $("#hdocente").val();
+        $.post("/Profesor/Tablacalificaciones", {
+
+            "hdocente": hdocente,
+            "periodo": "${periodo}"
+        }, function (respuesta) {
+            $("#resul").html(respuesta);
+        });
+    }
+</script>

@@ -1,71 +1,58 @@
 #{extends 'Menuintro.html' /}
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>Registro Aspirantes</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body metro>
-        <div class="grid fluid">
+
+<div class="grid fluid">
+    <div class="row">
+        <div class="span12"><h1>Registro de Aspirantes</h1></div>
+        <div class="row">
+            <div class="span4">
+                <label trype="submit" for="Nombre">Nombre</label>
+                <input id="Nombre" type="text" data-transform="input-control" name="Nombre"></input>
+            </div>
+            <div class="span4">
+                <label for="Apaterno">Apellido Paterno</label>
+                <input id="Apaterno" type="text" data-transform="input-control" name="Apaterno"></input>
+            </div>
+            <div class="span4">
+                <label for="Amaterno">Apellido Materno</label>
+                <input id="Amaterno" type="text" data-transform="input-control" name="Amaterno"></input>
+                <button type ="submit" class="button fg-white bg-darkBlue place-right" onclick="Guardaraspirante()" name="guardar">guardar</button>
+            </div>
             <div class="row">
-                <div class="span12"><h1>Registro de Aspirantes</h1></div>
-                <div class="row">
-                    <div class="span4">
-                        <label trype="submit" for="Nombre">Nombre</label>
-                        <input id="Nombre" type="text" data-transform="input-control" name="Nombre"></input>
-                    </div>
-                    <div class="span4">
-                        <label for="Apaterno">Apellido Paterno</label>
-                        <input id="Apaterno" type="text" data-transform="input-control" name="Apaterno"></input>
-                    </div>
-                    <div class="span4">
-                        <label for="Amaterno">Apellido Materno</label>
-                        <input id="Amaterno" type="text" data-transform="input-control" name="Amaterno"></input>
-                        <button type ="submit" class="button fg-white bg-darkBlue place-right" onclick="Guardaraspirante()" name="guardar">guardar</button>
-                    </div>
-                    <div class="row">
-                        <div class="span6 input-control select">
-                            <label >carrera</label>
-                            <select id="Carrera"   name='carrera'>
-                                #{list carrera,as: 'C'}
-                                <option value="${C.id}">${C.Nombre}</option>
-                                #{/list}
-                            </select>
-                        </div>
-                        <div class="span3">
-                            <label trype="submit" for="folio">folio</label>
-                            <input id="folio" type="text" data-transform="input-control" name="folio"></input>
-                        </div>
-                    </div>
-                    <div id="resul"></div>
-                    <script>
-
-
-                        function Guardaraspirante() {
-                            var Nombre = $("#Nombre").val();
-                            var Apaterno = $("#Apaterno").val();
-                            var Amaterno = $("#Amaterno").val();
-                            var folio = $("#folio").val();
-                            var carrera = $("#Carrera").val();
-                            $.get("/Escolares/Guardaraspirantes", {
-                                "Nombre": Nombre,
-                                "Apaterno": Apaterno,
-                                "Amaterno": Amaterno,
-                                "folio": folio,
-                                "carrera": carrera
-
-                            }, function (respuesta) {
-                                $("#resul").html(respuesta);
-                            });
-                        }
-                    </script>
+                <div class="span6 input-control select">
+                    <label >carrera</label>
+                    <select id="Carrera"   name='carrera'>
+                        #{list carrera,as: 'C'}
+                        <option value="${C.id}">${C.Nombre}</option>
+                        #{/list}
+                    </select>
+                </div>
+                <div class="span3">
+                    <label trype="submit" for="folio">folio</label>
+                    <input id="folio" type="text" data-transform="input-control" name="folio"></input>
                 </div>
             </div>
+            <div id="resul"></div>
+            <script>
+
+
+                function Guardaraspirante() {
+                    var Nombre = $("#Nombre").val();
+                    var Apaterno = $("#Apaterno").val();
+                    var Amaterno = $("#Amaterno").val();
+                    var folio = $("#folio").val();
+                    var carrera = $("#Carrera").val();
+                    $.get("/Escolares/Guardaraspirantes", {
+                        "Nombre": Nombre,
+                        "Apaterno": Apaterno,
+                        "Amaterno": Amaterno,
+                        "folio": folio,
+                        "carrera": carrera
+
+                    }, function (respuesta) {
+                        $("#resul").html(respuesta);
+                    });
+                }
+            </script>
         </div>
-    </body>
-</html>
+    </div>
+</div>

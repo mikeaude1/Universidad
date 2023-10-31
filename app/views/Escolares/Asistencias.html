@@ -5,10 +5,10 @@
     </div>
     <div class="panel-content">
         <div class="accordion" data-role="accordion">
-            #{list hm,as: 'hm'}
+            #{list hm,as: 'h'}
             <div class="accordion-frame">
 
-                <a href="#" class="heading">${hm.Materia.Nombre}</a>
+                <a href="#" class="heading">${h.Materia.Nombre}</a>
 
                 <div class="content">
 
@@ -24,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            #{list hm.obtenerasistencias(),as: 'a'}
+                            #{list h.obtenerasistencias(),as: 'a'}
                             <tr>
                                 <td>${a.Fecha}</td>
                                 <td>${a.Tipodeasistencia.Tipo}</td>

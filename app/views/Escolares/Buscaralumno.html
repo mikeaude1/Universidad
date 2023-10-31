@@ -1,66 +1,62 @@
 #{extends 'Menuintro.html' /}
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
 
-    <body metro>
-        <div class="grid">
-            <div class="row fn-bolder" style="    font-family: 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
-                 font-weight: 300;
-                 color: #000000;
-                 letter-spacing: 0.00em;
-                 font-size: 2rem;
-                 line-height: 2rem;
-                 letter-spacing: 0.01em;">
-                <div class="span3">
-                    <label for="matricula"class="label">Matricula</label>
-                    <input id="matricula" type="text" placeholder="Busca por matricula" data-transform="input-control"></input>
-                </div>
-                <div class="span3">
-                    <label for="nombre"class="label">Nombre</label>
-                    <input id="nombre" type="text" placeholder="Busca por Nombre" data-transform="input-control"B></input>
-                </div>
-                <div class="span3">
-                    <label for="apaterno"class="label">Apellido Paterno</label>
-                    <input id="apaterno" type="text" placeholder="Busca por Apellido Paterno" data-transform="input-control"></input>
-                </div>
-                <div class="span3">
-                    <label for="amaterno" class="label" >Apellido Materno %{String idusuario = session.get("idusuario");
-                        }%
-                        ${idusuario}</label>
-                    <input id="amaterno" type="text" placeholder="Busca por Apellido Materno" data-transform="input-control"></input>
-                </div>
-                <div class="row">
-                    <div class="span12 ">
-                        <button type ="submit" class="primary image-button fg-white  bg-darkBlue " onclick='buscar()'>
-                            Buscar
-                            <i class="icon-search bg-blue "></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div id='aspirant'></div>
-            <script>
-                function buscar() {
-                    var matricula = $("#matricula").val();
-                    var nombre = $("#nombre").val();
-                    var apaterno = $("#apaterno").val();
-                    var amaterno = $("#amaterno").val();
-                    $.get("/Escolares/Tablabusqueda", {
-                        "matricula": matricula,
-                        "nombre": nombre,
-                        "apaterno": apaterno,
-                        "amaterno": amaterno
-                    }
-                    , function (respuesta) {
-                        $("#aspirant").html(respuesta);
-                    });
-                }
+<div class="grid">
+    <div class="row">
+        <div class="span12"><h1>Buscar Expediente</h1></div>
+        <br>
+    </div>
+    <div class="row fn-bolder" style="    font-family: 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+         font-weight: 300;
+         color: #000000;
+         letter-spacing: 0.00em;
+         font-size: 2rem;
+         line-height: 2rem;
+         letter-spacing: 0.01em;">
+        <div class="span3">
+            <label for="matricula" class="label">Matricula</label>
+            <input id="matricula" type="text" placeholder="Busca por matricula" data-transform="input-control">
+        </div>
+        <div class="span3">
+            <label for="nombre" class="label">Nombre</label>
+            <input id="nombre" type="text" placeholder="Busca por Nombre" data-transform="input-control">
+        </div>
+        <div class="span3">
+            <label for="apaterno"class="label">Apellido Paterno</label>
+            <input id="apaterno" type="text" placeholder="Busca por Apellido Paterno" data-transform="input-control">
+        </div>
+        <div class="span3">
+            <label for="amaterno" class="label" >Apellido Materno %{String idusuario = session.get("idusuario");
+                }%
+                ${idusuario}</label>
+            <input id="amaterno" type="text" placeholder="Busca por Apellido Materno" data-transform="input-control">
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12 ">
+            <button type ="submit" class="primary image-button fg-white  bg-darkBlue " onclick='buscar()'>
+                Buscar
+                <i class="icon-search bg-blue "></i>
+            </button>
+        </div>
+    </div>
+
+    <div id='aspirant'></div>
+    <script>
+        function buscar() {
+            var matricula = $("#matricula").val();
+            var nombre = $("#nombre").val();
+            var apaterno = $("#apaterno").val();
+            var amaterno = $("#amaterno").val();
+            $.get("/Escolares/Tablabusqueda", {
+                "matricula": matricula,
+                "nombre": nombre,
+                "apaterno": apaterno,
+                "amaterno": amaterno
+            }
+            , function (respuesta) {
+                $("#aspirant").html(respuesta);
+            });
+        }
 
 
-            </script>
-    </body>
-</html>
+    </script>

@@ -21,8 +21,26 @@ public class Interno extends Controller {
         List<Accesos> acceso = Accesos.find("usuario.id=?  AND Activo=? order By perfil", usua.id,1).fetch();
         render(acceso, usua);
     }
+@Before
+     static void checkAuth1() {
+        try {
+            String idusuario = session.get("idusuario");
+            long idusuarios = Long.parseLong(idusuario);
+            Usuarios usuario = Usuarios.findById(idusuarios);
 
-    @Before
+        
+                Accesos acceso = Accesos.find("usuario.id=?  AND activo=?", usuario.id,true).first();
+
+                if (acceso == null) {
+                    flash.error("Debes iniciar sesión para acceder a esta página.");
+                    redirect("/Externo/Login");
+                }
+            } catch (Exception e) {
+                flash.error("Ocurrió un error al verificar la autenticación.");
+                redirect("/Externo/Login");
+            }
+       
+        }
     static void checkAuth() {
         try {
             String idusuario = session.get("idusuario");
@@ -44,7 +62,16 @@ public class Interno extends Controller {
         }
     
 
-    public static void Administrador(String usuario, String nombre, String apaterno, String amaterno, int nivel, Perfiles perfil, String password) {
+    public static void Administrador(String usuario, String nombre, String apaterno, String amaterno, int nivel, long perfil, String password) {
+        checkAuth();
+        
+        System.out.println("password = " + password);
+        System.out.println("perfil = " + perfil);
+        System.out.println("nivel = " + nivel);
+        System.out.println("amaterno = " + amaterno);
+        System.out.println("apaterno = " + apaterno);
+        System.out.println("nombre = " + nombre);
+        System.out.println("usuario = " + usuario);
         Personas perso = Personas.find("Nombre=? AND ApellidoPaterno=? AND ApellidoMaterno=?", nombre, apaterno, amaterno).first();
         if (perso == null) {
             Personas person = new Personas();
@@ -60,7 +87,7 @@ public class Interno extends Controller {
             nuevousua.Persona = person;
             nuevousua.Contraseña = Codec.hexMD5(password);
             nuevousua.save();
-            Perfiles perfile = Perfiles.find("Nivelacceso=?", nivel).first();
+            Perfiles perfile = Perfiles.findById(perfil);
 
             Accesos acceso = new Accesos();
             acceso.perfil = perfile;
@@ -73,7 +100,8 @@ public class Interno extends Controller {
             nuevousua.Nombreusuario = usuario;
             nuevousua.Persona = perso;
             nuevousua.save();
-            Perfiles perfile = Perfiles.find("Nombreperfil=?", perfil.Nombreperfil).first();
+            
+            Perfiles perfile = Perfiles.findById(perfil);
 
             Accesos acceso = new Accesos();
             acceso.perfil = perfile;
@@ -83,10 +111,11 @@ public class Interno extends Controller {
 
         }
 
-        redirect("Interno/Listausuarios");
+        redirect("../../Interno/Listausuarios");
     }
 
     public static void Crearusuario() {
+        checkAuth();
         List<Perfiles> perfil = Perfiles.findAll();
 
         render(perfil);
@@ -151,10 +180,11 @@ public class Interno extends Controller {
             menu.addAll(menusPerfil);
         }
         
-        render(menu,perfiles);
+        render(menu,perfiles,acceso);
     }
 
     public static void Listausuarios() {
+        checkAuth();
         List<Usuarios> allusers = Usuarios.find("Activo=?", true).fetch();
         List<Accesos> accesos = Accesos.find("Activo=?", true).fetch();
         render(allusers, accesos);

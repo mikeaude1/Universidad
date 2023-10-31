@@ -40,35 +40,29 @@
     </head>
 
     <body metro>
-
         <div class="grid-flex " style="position: fixed;" style="left: 0px; margin-bottom: 30px; "
              style="top: 130px !important">
             <div class="row">
                 <div class="span3 bg-blue fg-white fn-bolder " id ="sidebar" >
                     <nav class="sidebar dark bg-violete " >
                         <ul>
+                            #{list acceso, as: 'm'}
+
                             <li class="stick ">
-
-                                #{list perfiles, as: 'p'}
-                                <a class= "title dropdown-toggle">${p.Nombreperfil}</a>
-
+                                <a class= "title dropdown-toggle">${m.perfil.Nombreperfil}</a>
                                 <ul class="dropdown-menu bg-darkCobalt" data-role="dropdown">
-
-                                    #{list menu, as: 'm'}
-                                    #{if m.Perfil.id == p.id}
-                                    <li><a  href="${m.Ruta}"><i class="${
-                                                                m.Icono
-                                                                }"></i>${m.Elmento}</a></li>
-                                    #{/if}
+                                    #{list m.usuario.Obtenermenu(m.perfil.id),as: 'ob'}
+                                    <li><a  href="${ob.Ruta}"><i class="${
+                                                                 ob.Icono
+                                                                 }"></i>${ob.Elmento}</a></li>
                                     #{/list}
+                                </ul>
+
                             </li>
 
-
+                            #{/list}
                         </ul>
-                        #{/list}
                     </nav>
                 </div>
             </div>
         </div>
-
-    </body>

@@ -1,67 +1,67 @@
 
 <div class="grid-fluid">
     <div class="row">
-        <div class="span12">
 
 
-            <table id="example" class="table" style="width:100%">
-                <thead>
 
-                    <tr>
-                        <th  class="text-left sorting sorting_desc" tabindex="0" rowspan='1' colspan="1"style="border:1px solid black;" >
-                            Nombre
-                        </th>
+        <table id="example" class="table span12" style="width:100%">
+            <thead>
 
-                        <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
-                            Asistencia
-                        </th>
-                        <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
-                            Retardo
-                        </th>
-                        <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
-                            Falta
-                        </th>
-                        <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
-                            Justificante
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    #{list Hm, as: 'hm'}
-                    <tr>
+                <tr>
+                    <th  class="text-left sorting sorting_desc" tabindex="0" rowspan='1' colspan="1"style="border:1px solid black;" >
+                        Nombre
+                    </th>
 
-                        <td id="Nombre" class="right " style="border:1px solid black;">
-                            ${hm.Historialalumno.alumno.Persona.Nombre} ${hm.Historialalumno.alumno.Persona.ApellidoPaterno} ${hm.Historialalumno.alumno.Persona.ApellidoMaterno}
-                        </td>
-                        #{list ta, as: 't'}
-                        <td  class="right " style="border:1px solid black;">
-                            <div class="input-control radio" data-role="input-control">
-                                <label>
+                    <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
+                        Asistencia
+                    </th>
+                    <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
+                        Retardo
+                    </th>
+                    <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
+                        Falta
+                    </th>
+                    <th class="text-left sorting_desc" rowspan='1' colspan="1" style="border:1px solid black;">
+                        Justificante
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                #{list Hm, as: 'hm'}
+                <tr>
 
-                                    <input id="Tipo${hm.id}${t.id}" type="radio" name="tipo${hm.id}" value="${t.id}"  #{if t.obtenertipo(Hd.id, hm.id, fecha)}checked #{/if} onchange="Guardar(${hm.id}, ${t.id})">
-                                           <span class="check" ></span>
-                                    ${t.Tipo}
+                    <td id="Nombre" class="right " style="border:1px solid black;">
+                        ${hm.Historialalumno.alumno.Persona.Nombre} ${hm.Historialalumno.alumno.Persona.ApellidoPaterno} ${hm.Historialalumno.alumno.Persona.ApellidoMaterno}
+                    </td>
+                    #{list ta, as: 't'}
+                    <td  class="right " style="border:1px solid black;">
+                        <div class="input-control radio" data-role="input-control">
+                            <label>
 
-                                </label>
-                            </div>
-                        </td>
-                        #{/list}
+                                <input id="Tipo${hm.id}${t.id}" type="radio" name="tipo${hm.id}" value="${t.id}"  #{if t.obtenertipo(Hd.id, hm.id, fecha)}checked #{/if} onchange="Guardar(${hm.id}, ${t.id})">
+                                       <span class="check" ></span>
+                                ${t.Tipo}
 
-                        <td  class="right " style="border:1px solid black;">
-                            <div class="input-control checkbox" id='esconder${hm.id}' #{if  !hm.obtenertipofalta(fecha)}style="display:none;" #{/if}>
-                                 <label>
-                                    <input id="Justif${hm.id}"  type="checkbox" id="justificado" name="justificacion" #{if hm.obtenerjustificacion(Hd.id, fecha)}checked #{/if}  onchange="Guardar(${hm.id}, ${t.id})">
-                                           <span class="check"></span>
-                                    Justificar
-                                </label>
-                            </div>
-                    </tr>
-
+                            </label>
+                        </div>
+                    </td>
                     #{/list}
-                </tbody>
-            </table>
-        </div>
+
+                    <td  class="right " style="border:1px solid black;">
+                        <div class="input-control checkbox" id='esconder${hm.id}' #{if  !hm.obtenertipofalta(fecha)}style="display:none;" #{/if}>
+                             <label>
+                                <input id="Justif${hm.id}"  type="checkbox" id="justificado" name="justificacion" #{if hm.obtenerjustificacion(Hd.id, fecha)}checked #{/if}  onchange="Guardar(${hm.id}, ${t.id})">
+                                       <span class="check"></span>
+                                Justificar
+                            </label>
+                        </div>
+                </tr>
+
+                #{/list}
+            </tbody>
+        </table>
     </div>
+
 
 </div>
 
